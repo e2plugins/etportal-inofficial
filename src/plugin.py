@@ -364,13 +364,12 @@ class EtPortalScreen(Screen):
         self["actions"] = ActionMap(["MoviePlayerActions", "OkCancelActions", "DirectionActions", "EtPortalActions", "WizardActions", "NumberActions", "EPGSelectActions"],
 		{
 			"cancel": self.keyExit,
-			"leavePlayerOnExit": self.keyExit,
                         "ok": self.keyOk,
 			"left": self.keyLeft,
 			"right": self.keyRight,
-			"up": self.keyLeft,
+			"up": self.keyPageUp,
 			"menu": self.keyMenu,
-			"down": self.keyRight,
+			"down": self.keyPageDown,
 			"info": self.keyGet,
 			"mark_button": self.keyExit,
 		}, -1)
@@ -504,6 +503,22 @@ class EtPortalScreen(Screen):
 					writeToVFD(self.Thumbnaillist[3][3])
 					self.isWorking = False
 
+    def keyPageDown(self):
+        if self.isWorking:
+            return
+        self.index -= 7
+        if self.index < 0:
+            self.index = self.maxentry
+        self.newPage()
+    
+    def keyPageUp(self):
+        if self.isWorking:
+            return
+        self.index += 7
+        if self.index > self.maxentry:
+            self.index = 0
+        self.newPage()
+        
     def keyLeft(self):
         if self.isWorking:
             return
