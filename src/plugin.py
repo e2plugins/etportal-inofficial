@@ -122,6 +122,7 @@ config.plugins.EtPortal.ondemand = ConfigYesNo(default=True)
 config.plugins.EtPortal.mp3browser = ConfigYesNo(default=True)
 config.plugins.EtPortal.moviebrowser = ConfigYesNo(default=True)
 config.plugins.EtPortal.pvmc = ConfigYesNo(default=True)
+config.plugins.EtPortal.webradiofs = ConfigYesNo(default=True)
 
 config.plugins.EtPortal.none = NoSave(ConfigNothing()) 
 config.plugins.EtPortal.color = ConfigSelection(default='SkinColor', choices=[('iceHD', _('iceHD')), ('black', _('black')), ('SkinColor', _('SkinColor'))])
@@ -290,6 +291,8 @@ class EtPortalScreen(Screen):
             piclist.append(('moviebrowser.png', _('Movie-Browser')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/ProjectValerie/plugin.pyo') and config.plugins.EtPortal.pvmc.value:
             piclist.append(('valerie.png', _('Project-Valerie')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/plugin.pyo') and config.plugins.EtPortal.webradiofs.value:
+            piclist.append(('webradiofs.png', _('WebRadioFS')))
         if config.plugins.EtPortal.showtimericon.value:
             piclist.append(('timer.png', _('Timers for recordings')))
         if config.plugins.EtPortal.movie.value:
@@ -872,6 +875,18 @@ class EtPortalScreen(Screen):
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/ProjectValerie/plugin.pyo'):
                 from Plugins.Extensions.ProjectValerie.plugin import *
                 self.session.open(PVMC_MainMenu)
+        elif 'webradiofs.png' in self.Thumbnaillist[3][2]:
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/plugin.pyo'):
+                from Screens.PluginBrowser import PluginBrowser
+                from Plugins.Plugin import PluginDescriptor
+                from Components.PluginList import *
+                from Components.PluginComponent import plugins
+                pluginlist = []
+                pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
+                for plugin in pluginlist:
+                    if 'webradioFS' in str(plugin.name):
+                        break
+                plugin(session=self.session)
         elif 'yamp.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/YampMusicPlayer/plugin.pyo'):
                 from Plugins.Extensions.YampMusicPlayer.plugin import *
@@ -1289,10 +1304,14 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('WebLinks'), config.plugins.EtPortal.weblinks))
         else:
             self.list.append(getConfigListEntry(_('Weblinks'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebMedia/'):
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebMedia/plugin.pyo'):
             self.list.append(getConfigListEntry(_('WebMedia'), config.plugins.EtPortal.webmedia))
         else:
             self.list.append(getConfigListEntry(_('WebMedia'), config.plugins.EtPortal.none))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('WebRadio FS'), config.plugins.EtPortal.webradiofs))
+        else:
+            self.list.append(getConfigListEntry(_('WebRadio FS'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Wikipedia/plugin.pyo'):
             self.list.append(getConfigListEntry(_('Wikipedia'), config.plugins.EtPortal.wiki))
         else:
