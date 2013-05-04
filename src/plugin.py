@@ -1000,10 +1000,9 @@ class EtPortalScreen(Screen):
         if config.plugins.EtPortal.finalexit.value:
             if 'movie_player.png' in self.Thumbnaillist[3][2]:
                 if config.plugins.EtPortal.finalexit.value == 'True':
-                    config.plugins.EtPortal.finalexit.setValue(False)
+                    self.close(False)
             else:
-                config.plugins.EtPortal.finalexit.setValue(True)
-                self.close()
+                self.close(True)
 
     def keyExit(self):
         global global_index
