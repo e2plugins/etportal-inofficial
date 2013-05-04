@@ -125,7 +125,7 @@ config.plugins.EtPortal.pvmc = ConfigYesNo(default=True)
 config.plugins.EtPortal.webradiofs = ConfigYesNo(default=True)
 
 config.plugins.EtPortal.none = NoSave(ConfigNothing()) 
-config.plugins.EtPortal.color = ConfigSelection(default='SkinColor', choices=[('iceHD', _('iceHD')), ('black', _('black')), ('SkinColor', _('SkinColor'))])
+config.plugins.EtPortal.color = ConfigSelection(default='SkinColor', choices=[('iceHD', _('iceHD')), ('black', _('black')), ('Nobile', _('Nobile')), ('SkinColor', _('SkinColor'))])
 
 def writeToVFD(txt):
     if config.plugins.EtPortal.vfd.value:
@@ -361,6 +361,21 @@ class EtPortalScreen(Screen):
             self.skin += '<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/pics/sel.png" position="562,0" size="150,130" zPosition="2" transparent="1" alphatest="blend" />'
             self.skin += '<eLabel position="0,75" zPosition="0" size="e-0,e-90" />' + skincontent
             self.skin += '<widget source="label" render="Label" position="0,148" size="e-0,40" halign="center" font="Regular;30" zPosition="2" backgroundColor="#00000000" transparent="1" noWrap="1" foregroundColor="' + self.textcolor + '" />'
+            self.skin += '</screen>'
+		
+		elif config.plugins.EtPortal.color.value == 'Nobile':
+            self.skin = '<screen position="0,0" size="1280,720" flags="wfNoBorder" backgroundColor="transparent" >'
+            posX = 0
+            self.skin += '<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/NobileSkin/bar.png" position="0,0" size="1280,720" zPosition="0" transparent="1" alphatest="on" />'
+            self.skin += '<widget source="label" render="Label" position="455,678" shadowColor="#000000" shadowOffset="1,1" size="360,40" halign="center" font="Regular;22" zPosition="2" backgroundColor="#00000000" transparent="1" noWrap="1" foregroundColor="#ffffff" />'
+            self.skin += '<widget name="thumb0" position="100,557" size="170,170" zPosition="5" alphatest="on" backgroundColor="#d4d4d4" transparent="1" />'
+            self.skin += '<widget name="thumb1" position="257,545" size="170,170" zPosition="5" alphatest="on" backgroundColor="#d4d4d4" transparent="1" />'
+            self.skin += '<widget name="thumb2" position="414,536" size="170,170" zPosition="5" alphatest="on" backgroundColor="#d4d4d4" transparent="1" />'
+            self.skin += '<widget name="thumb3" position="570,520" size="170,170" zPosition="8" alphatest="on" backgroundColor="#d4d4d4" transparent="1" />'
+            self.skin += '<widget name="thumb4" position="728,536" size="170,170" zPosition="5" alphatest="on" backgroundColor="#d4d4d4" transparent="1" />'
+            self.skin += '<widget name="thumb5" position="886,545" size="170,170" zPosition="5" alphatest="on" backgroundColor="#d4d4d4" transparent="1" />'
+            self.skin += '<widget name="thumb6" position="1047,557" size="170,170" zPosition="5" alphatest="on" backgroundColor="#d4d4d4" transparent="1" />'
+            self.skin += '<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/NobileSkin/sel.png" position="560,520" size="150,130" zPosition="9" transparent="1" alphatest="on" />'            
             self.skin += '</screen>'
         
         Screen.__init__(self, session)
