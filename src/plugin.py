@@ -363,7 +363,7 @@ class EtPortalScreen(Screen):
             self.skin += '<widget source="label" render="Label" position="0,148" size="e-0,40" halign="center" font="Regular;30" zPosition="2" backgroundColor="#00000000" transparent="1" noWrap="1" foregroundColor="' + self.textcolor + '" />'
             self.skin += '</screen>'
 		
-		elif config.plugins.EtPortal.color.value == 'Nobile':
+	elif config.plugins.EtPortal.color.value == 'Nobile':
             self.skin = '<screen position="0,0" size="1280,720" flags="wfNoBorder" backgroundColor="transparent" >'
             posX = 0
             self.skin += '<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/NobileSkin/bar.png" position="0,0" size="1280,720" zPosition="0" transparent="1" alphatest="on" />'
