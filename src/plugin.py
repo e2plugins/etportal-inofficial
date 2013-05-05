@@ -998,7 +998,7 @@ class EtPortalScreen(Screen):
             from Screens.PluginBrowser import PluginBrowser
             self.session.open(PluginBrowser)
         if config.plugins.EtPortal.finalexit.value:
-            if 'movie_player.png' in self.Thumbnaillist[3][2]:
+            if 'movie_player.png' in self.Thumbnaillist[3][2] or 'mediaportal.png' in self.Thumbnaillist[3][2]:
                 if config.plugins.EtPortal.finalexit.value == 'True':
                     self.close(False)
             else:
