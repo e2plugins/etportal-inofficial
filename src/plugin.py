@@ -407,9 +407,13 @@ class EtPortalScreen(Screen):
             index += 1
             framePos += 1
 
-        self.maxentry = len(self.filelist) - 1
+        self.maxentry = len(self.filelist)-1        
         if config.plugins.EtPortal.rememberposition.value:
+            global global_index
             self.index = global_index
+        else:
+            self.index = 0
+            
         self.picload = ePicLoad()
         self.picload.PictureData.get().append(self.showPic)
         self.onLayoutFinish.append(self.setPicloadConf)
