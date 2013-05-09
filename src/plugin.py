@@ -9,7 +9,7 @@ from Plugins.Plugin import PluginDescriptor
 from Components.PluginComponent import plugins
 from Components.Label import Label
 from Components.Pixmap import Pixmap
-from enigma import ePicLoad, eTimer
+from enigma import ePicLoad, eTimer, getDesktop
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Screens.InfoBarGenerics import InfoBarPlugins
@@ -28,7 +28,7 @@ from Components.PluginList import *
 from Components.Pixmap import MovingPixmap
 from __init__ import _
 
-EtPortal_version = '3.1'
+EtPortal_version = '3.2'
 SHARED_DIR_PATH = '/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/pics/'
 
 IMAGE_SIZE = 128
@@ -41,6 +41,7 @@ NUMBER_OF_PICTURES = 7
 
 baseInfoBarPlugins__init__ = None
 global_index = 0
+skin_w = getDesktop(0).size().width()
 
 config.plugins.EtPortal = ConfigSubsection()
 config.plugins.EtPortal.finalexit = ConfigBoolean(default=False)
@@ -125,7 +126,7 @@ config.plugins.EtPortal.pvmc = ConfigYesNo(default=True)
 config.plugins.EtPortal.webradiofs = ConfigYesNo(default=True)
 
 config.plugins.EtPortal.none = NoSave(ConfigNothing()) 
-config.plugins.EtPortal.color = ConfigSelection(default='SkinColor', choices=[('iceHD', _('iceHD')), ('black', _('black')), ('Nobile', _('Nobile')), ('SkinColor', _('SkinColor'))])
+config.plugins.EtPortal.color = ConfigSelection(default='SkinColor', choices=[('ice_HD', _('ice_HD')), ('black_HD', _('black_HD')), ('Nobile_HD', _('Nobile_HD')), ('SkinColor_HD', _('SkinColor_HD')), ('Metrix_FullHD', _('Metrix_FullHD'))])
 
 def writeToVFD(txt):
     if config.plugins.EtPortal.vfd.value:
@@ -330,7 +331,7 @@ class EtPortalScreen(Screen):
             elif posX == 4:
                 hOffset += IMAGE_SIZE + IMAGE_SPACE
 
-        if config.plugins.EtPortal.color.value == 'iceHD':
+        if config.plugins.EtPortal.color.value == 'ice_HD':
             self.skin = '<screen position="0,0" size="1280,720" flags="wfNoBorder" backgroundColor="transparent" >'
             posX = 0
             self.skin += '<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/iceskin/icebar.png" position="0,0" size="1280,720" zPosition="0" transparent="1" alphatest="on" />'
@@ -347,7 +348,7 @@ class EtPortalScreen(Screen):
             self.skin += '<widget name="frame1" position="0,-720" size="1280,720" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/iceskin/float1.png" zPosition="3" alphatest="on" />'
             self.skin += '</screen>'
         
-        elif config.plugins.EtPortal.color.value == 'black':
+        elif config.plugins.EtPortal.color.value == 'black_HD':
             self.skin = '<screen position="0,e-200" size="e-0,200" flags="wfNoBorder" backgroundColor="transparent" >'
             posX = 0
             self.skin += '<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/pics/sel.png" position="562,0" size="150,130" zPosition="2" transparent="1" alphatest="blend" />'
@@ -355,7 +356,7 @@ class EtPortalScreen(Screen):
             self.skin += '<widget source="label" render="Label" position="0,148" size="e-0,40" halign="center" font="Regular;30" zPosition="2" backgroundColor="#00000000" transparent="1" noWrap="1" foregroundColor="' + self.textcolor + '" />'
             self.skin += '</screen>'
         
-        elif config.plugins.EtPortal.color.value == 'SkinColor':
+        elif config.plugins.EtPortal.color.value == 'SkinColor_HD':
             self.skin = '<screen position="0,e-200" size="e-0,200" flags="wfNoBorder" backgroundColor="transparent" >'
             posX = 0
             self.skin += '<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/pics/sel.png" position="562,0" size="150,130" zPosition="2" transparent="1" alphatest="blend" />'
@@ -363,7 +364,7 @@ class EtPortalScreen(Screen):
             self.skin += '<widget source="label" render="Label" position="0,148" size="e-0,40" halign="center" font="Regular;30" zPosition="2" backgroundColor="#00000000" transparent="1" noWrap="1" foregroundColor="' + self.textcolor + '" />'
             self.skin += '</screen>'
 		
-	elif config.plugins.EtPortal.color.value == 'Nobile':
+	elif config.plugins.EtPortal.color.value == 'Nobile_HD':
             self.skin = '<screen position="0,0" size="1280,720" flags="wfNoBorder" backgroundColor="transparent" >'
             posX = 0
             self.skin += '<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/NobileSkin/bar.png" position="0,0" size="1280,720" zPosition="0" transparent="1" alphatest="on" />'
@@ -377,7 +378,22 @@ class EtPortalScreen(Screen):
             self.skin += '<widget name="thumb6" position="1047,557" size="170,170" zPosition="5" alphatest="on" backgroundColor="#d4d4d4" transparent="1" />'
             self.skin += '<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/NobileSkin/sel.png" position="560,520" size="150,130" zPosition="9" transparent="1" alphatest="on" />'            
             self.skin += '</screen>'
-        
+            
+        elif config.plugins.EtPortal.color.value == 'Metrix_FullHD':
+            self.skin = '<screen position="0,0" size="1920,1080" flags="wfNoBorder" backgroundColor="transparent" >'
+            posX = 0
+            self.skin += '<eLabel position="0,900" size="1920,140" zPosition="0" backgroundColor="#40000000" />'
+            self.skin += '<widget source="label" render="Label" position="751,980" size="456,51" halign="center" font="Regular; 29" zPosition="2" backgroundColor="#40000000" transparent="1" noWrap="1" foregroundColor="#0070ad11" />'
+            self.skin += '<widget name="thumb0" position="420,879" size="128,128" zPosition="5" alphatest="on" backgroundColor="#0070ad11" transparent="1" />'
+            self.skin += '<widget name="thumb1" position="585,859" size="128,128" zPosition="5" alphatest="on" backgroundColor="#40000000" transparent="1" />'
+            self.skin += '<widget name="thumb2" position="750,840" size="128,128" zPosition="5" alphatest="on" backgroundColor="#40000000" transparent="1" />'
+            self.skin += '<widget name="thumb3" position="913,827" size="128,128" zPosition="8" alphatest="on" backgroundColor="#40000000" transparent="1" />'
+            self.skin += '<widget name="thumb4" position="1077,840" size="128,128" zPosition="5" alphatest="on" backgroundColor="#40000000" transparent="1" />'
+            self.skin += '<widget name="thumb5" position="1242,859" size="128,128" zPosition="5" alphatest="on" backgroundColor="#40000000" transparent="1" />'
+            self.skin += '<widget name="thumb6" position="1404,879" size="128,128" zPosition="5" alphatest="on" backgroundColor="#40000000" transparent="1" />'
+            self.skin += '<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/pics/sel.png" position="902,826" size="150,150" zPosition="9" transparent="1" alphatest="on" />'            
+            self.skin += '</screen>'
+            
         Screen.__init__(self, session)
         self["actions"] = ActionMap(["MoviePlayerActions", "OkCancelActions", "DirectionActions", "EtPortalActions", "WizardActions", "NumberActions", "EPGSelectActions"],
 		{
@@ -1031,14 +1047,25 @@ class EtPortalScreen(Screen):
                     self.session.open(movieBrowserPosterwall, 0, config.plugins.moviebrowser.filter.value, config.plugins.moviebrowser.filter.value)
 
 class EtPortalSetupScreen(Screen, ConfigListScreen):
-    skin = """
-	<screen position="c-300,c-250" size="600,500" title="EtPortal %s %s">
-		<widget name="config" position="25,25" scrollbarMode="showOnDemand" size="550,400" />
-		<ePixmap pixmap="skin_default/buttons/red.png" position="20,e-45" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/green.png" position="160,e-45" size="140,40" alphatest="on" />
-		<widget source="key_red" render="Label" position="20,e-45" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-		<widget source="key_green" render="Label" position="160,e-45" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-	</screen>""" % (EtPortal_version, _("Setup"))
+    if skin_w  == 1920:
+        skin = """
+	    <screen position="center,center" size="900,850" title="EtPortal %s %s">
+		    <widget name="config" position="25,25" font="Regular;30" itemHeight="40" scrollbarMode="showOnDemand" size="850,690" />
+		    <eLabel position="25,771" size="10,60" zPosition="1" backgroundColor="#00f23d21" />
+		    <widget source="key_red" render="Label" position="48,771" size="260,60" zPosition="1" font="Regular;36" valign="center" halign="left" foregroundColor="#ffffff" transparent="1" />
+		    <eLabel position="325,771" size="10,60" zPosition="1" backgroundColor="#00389416" />
+		    <widget source="key_green" render="Label" position="348,771" size="260,60" zPosition="1" font="Regular;36" valign="center" halign="left" foregroundColor="#ffffff" transparent="1" />
+	    </screen>""" % (EtPortal_version, _("Setup"))
+    else:
+        skin = """
+	    <screen position="c-300,c-250" size="600,500" title="EtPortal %s %s">
+		    <widget name="config" position="25,25" scrollbarMode="showOnDemand" size="550,400" />
+		    <ePixmap pixmap="skin_default/buttons/red.png" position="20,e-45" size="140,40" alphatest="on" />
+		    <ePixmap pixmap="skin_default/buttons/green.png" position="160,e-45" size="140,40" alphatest="on" />
+		    <widget source="key_red" render="Label" position="20,e-45" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
+		    <widget source="key_green" render="Label" position="160,e-45" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
+	    </screen>""" % (EtPortal_version, _("Setup"))
+	    
     def __init__(self, session):
         self.skin = EtPortalSetupScreen.skin
         Screen.__init__(self, session)
@@ -1386,20 +1413,36 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
         self.close()
 
 
+def SkinWidthHD():
+    if skin_w  >= 1280:
+        return True
+    else:
+        return False
+        
+        
 def main(session, **kwargs):
     session.open(EtPortalSetupScreen)
 
 
 def main2(session, **kwargs):
-    session.open(EtPortalScreen)
+    if SkinWidthHD():
+        session.open(EtPortalScreen)
+    else:
+        session.open(MessageBox, _('EtPortal\n\nSorry.. No Support for Skin Resolution Size: \n\nSD: 720x576 px\nXD: 1024x720 px\n\n________________________________________\n\nSupported: \n\nHD: 1280x720 px\nFullHD: 1920x1080 px'), type=MessageBox.TYPE_INFO, timeout=25)
 
 
 def main3(session, **kwargs):
-    session.open(EtPortalScreen)
+    if SkinWidthHD():
+        session.open(EtPortalScreen)
+    else:
+        session.open(MessageBox, _('EtPortal\n\nSorry.. No Support for Skin Resolution Size: \n\nSD: 720x576 px\nXD: 1024x720 px\n\n________________________________________\n\nSupported: \n\nHD: 1280x720 px\nFullHD: 1920x1080 px'), type=MessageBox.TYPE_INFO, timeout=25)
 
 
 def markButtonHook(self):
-    self.session.open(EtPortalScreen)
+    if SkinWidthHD():
+        self.session.open(EtPortalScreen)
+    else:
+        self.session.open(MessageBox, _('EtPortal\n\nSorry.. No Support for Skin Resolution Size: \n\nSD: 720x576 px\nXD: 1024x720 px\n\n________________________________________\n\nSupported: \n\nHD: 1280x720 px\nFullHD: 1920x1080 px'), type=MessageBox.TYPE_INFO, timeout=25)
 
 
 def timerButtonHook(self):
@@ -1429,6 +1472,6 @@ def autostart(reason, **kwargs):
 
 def Plugins(**kwargs):
     return [PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=autostart),
-     PluginDescriptor(name=_('EtPortal Setup v3.1'), description=_('EtPortal Setup'), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main),
-     PluginDescriptor(name=_('EtPortal'), description=_('Inofficial v3.1'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='plugin.png', fnc=main2),
-     PluginDescriptor(name=_('EtPortal Inofficial v3.1'), description=_('EtPortal'), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main3)]
+     PluginDescriptor(name=_('EtPortal Setup v3.2'), description=_('EtPortal Setup'), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main),
+     PluginDescriptor(name=_('EtPortal'), description=_('Inofficial v3.2'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='plugin.png', fnc=main2),
+     PluginDescriptor(name=_('EtPortal Inofficial v3.2'), description=_('EtPortal'), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main3)]
