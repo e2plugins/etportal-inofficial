@@ -124,6 +124,7 @@ config.plugins.EtPortal.mp3browser = ConfigYesNo(default=True)
 config.plugins.EtPortal.moviebrowser = ConfigYesNo(default=True)
 config.plugins.EtPortal.pvmc = ConfigYesNo(default=True)
 config.plugins.EtPortal.webradiofs = ConfigYesNo(default=True)
+config.plugins.EtPortal.isiolive = ConfigYesNo(default=True)
 
 config.plugins.EtPortal.none = NoSave(ConfigNothing()) 
 config.plugins.EtPortal.color = ConfigSelection(default='SkinColor', choices=[('ice_HD', _('ice_HD')), ('black_HD', _('black_HD')), ('Nobile_HD', _('Nobile_HD')), ('SkinColor_HD', _('SkinColor_HD')), ('Metrix_FullHD', _('Metrix_FullHD'))])
@@ -294,6 +295,8 @@ class EtPortalScreen(Screen):
             piclist.append(('valerie.png', _('Project-Valerie')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/plugin.pyo') and config.plugins.EtPortal.webradiofs.value:
             piclist.append(('webradiofs.png', _('WebRadioFS')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/plugin.pyo') and config.plugins.EtPortal.isiolive.value:
+            piclist.append(('isiolive.png', _('TechniSat ISIO live-Portal')))
         if config.plugins.EtPortal.showtimericon.value:
             piclist.append(('timer.png', _('Timers for recordings')))
         if config.plugins.EtPortal.movie.value:
@@ -1017,6 +1020,12 @@ class EtPortalScreen(Screen):
         elif 'plugins.png' in self.Thumbnaillist[3][2]:
             from Screens.PluginBrowser import PluginBrowser
             self.session.open(PluginBrowser)
+        elif 'isiolive.png' in self.Thumbnaillist[3][2]:
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/plugin.pyo'):
+                from Plugins.Extensions.WebBrowser.plugin import BrowserRemoteControl
+                didOpen = True
+                url = 'http://193.158.71.207/?device=0008c92148605c99'
+                self.session.open(BrowserRemoteControl, url)
         if config.plugins.EtPortal.finalexit.value:
             if 'movie_player.png' in self.Thumbnaillist[3][2] or 'mediaportal.png' in self.Thumbnaillist[3][2]:
                 if config.plugins.EtPortal.finalexit.value == 'True':
@@ -1312,6 +1321,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
         else:
             self.list.append(getConfigListEntry(_('Spiegel ONLINE'), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_('System Information'), config.plugins.EtPortal.systeminfo))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('TechniSat ISIO live-Portal'), config.plugins.EtPortal.isiolive))
+        else:
+            self.list.append(getConfigListEntry(_('TechniSat ISIO live-Portal'), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_('Timer Option'), config.plugins.EtPortal.showtimericon))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/plugin.pyo'):
             self.list.append(getConfigListEntry(_('tunein Radio'), config.plugins.EtPortal.tunein))
