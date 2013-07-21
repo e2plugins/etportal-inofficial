@@ -59,7 +59,7 @@ config.plugins.EtPortal.songs = ConfigYesNo(default=False)
 config.plugins.EtPortal.media = ConfigYesNo(default=False)
 config.plugins.EtPortal.picture = ConfigYesNo(default=True)
 config.plugins.EtPortal.mytube = ConfigYesNo(default=False)
-config.plugins.EtPortal.etstreams = ConfigYesNo(default=False)
+config.plugins.EtPortal.iptv = ConfigYesNo(default=True)
 config.plugins.EtPortal.cinestream = ConfigYesNo(default=False)
 config.plugins.EtPortal.burning = ConfigYesNo(default=False)
 config.plugins.EtPortal.kinokiste = ConfigYesNo(default=False)
@@ -165,8 +165,8 @@ class EtPortalScreen(Screen):
             piclist.append(('network.png', _('Network Browser')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MyTube/plugin.pyo') and config.plugins.EtPortal.mytube.value:
             piclist.append(('mytube.png', _('My TubePlayer')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/EtStreams/plugin.pyo') and config.plugins.EtPortal.etstreams.value:
-            piclist.append(('etstreams.png', _('ET-Streams')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/IPTV-List-Updater/plugin.pyo') and config.plugins.EtPortal.iptv.value:
+            piclist.append(('iptv.png', _('IPTV-List Updater')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/cinestreamer/plugin.pyo') and config.plugins.EtPortal.cinestream.value:
             piclist.append(('cinestream.png', _('CineStream')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/laola1tvlive/plugin.pyo') and config.plugins.EtPortal.laola.value:
@@ -653,10 +653,11 @@ class EtPortalScreen(Screen):
                 from Plugins.Extensions.MyTube.plugin import *
                 l2key = True
                 self.session.open(MyTubePlayerMainScreen, l2key)
-        elif 'etstreams.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/EtStreams/plugin.pyo'):
-                from Plugins.Extensions.EtStreams.plugin import *
-                self.session.open(EtStreams)
+        elif 'iptv.png' in self.Thumbnaillist[3][2]:
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/IPTV-List-Updater/plugin.pyo'):
+                _temp = __import__('Plugins.Extensions.IPTV-List-Updater.plugin', globals(), locals(), ['Start'], -1)
+                Start = _temp.Start
+                self.session.open(Start)
         elif 'cinestream.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/cinestreamer/plugin.pyo'):
                 from Plugins.Extensions.cinestreamer.plugin import *
@@ -1159,10 +1160,6 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('EMC'), config.plugins.EtPortal.emc))
         else:
             self.list.append(getConfigListEntry(_('EMC'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/EtStreams/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('EtStreams'), config.plugins.EtPortal.etstreams))
-        else:
-            self.list.append(getConfigListEntry(_('EtStreams'), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_('Extension Plugins and applications'), config.plugins.EtPortal.extensions))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Facebook/plugin.pyo'):
             self.list.append(getConfigListEntry(_('facebook'), config.plugins.EtPortal.facebook))
@@ -1184,6 +1181,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('Hoerspiele'), config.plugins.EtPortal.hoerspiel))
         else:
             self.list.append(getConfigListEntry(_('Hoerspiele'), config.plugins.EtPortal.none))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/IPTV-List-Updater/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('IPTV-List Updater'), config.plugins.EtPortal.iptv))
+        else:
+            self.list.append(getConfigListEntry(_('IPTV-List Updater'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/istream/plugin.pyo'):
             self.list.append(getConfigListEntry(_('iStream'), config.plugins.EtPortal.istream))
         else:
