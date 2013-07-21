@@ -127,7 +127,7 @@ config.plugins.EtPortal.webradiofs = ConfigYesNo(default=True)
 config.plugins.EtPortal.isiolive = ConfigYesNo(default=True)
 
 config.plugins.EtPortal.none = NoSave(ConfigNothing()) 
-config.plugins.EtPortal.color = ConfigSelection(default='SkinColor', choices=[('ice_HD', _('ice_HD')), ('black_HD', _('black_HD')), ('Nobile_HD', _('Nobile_HD')), ('SkinColor_HD', _('SkinColor_HD')), ('Metrix_FullHD', _('Metrix_FullHD'))])
+config.plugins.EtPortal.color = ConfigSelection(default='SkinColor_HD', choices=[('ice_HD', _('ice_HD')), ('black_HD', _('black_HD')), ('Nobile_HD', _('Nobile_HD')), ('SkinColor_HD', _('SkinColor_HD')), ('Metrix_FullHD', _('Metrix_FullHD'))])
 
 def writeToVFD(txt):
     if config.plugins.EtPortal.vfd.value:
