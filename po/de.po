@@ -14,11 +14,21 @@ msgstr ""
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-msgid "black"
-msgstr "Schwarz"
+
+msgid "black_HD"
+msgstr "Schwarz HD"
 
 msgid "SkinColor"
-msgstr "Skin Farbe"
+msgstr "Skin Farbe HD"
+
+msgid "ice_HD"
+msgstr "ice HD"
+
+msgid "Nobile_HD"
+msgstr "Nobile HD"
+
+msgid "Metrix_FullHD"
+msgstr "Metrix FullHD"
 
 msgid "Picture Player"
 msgstr "Bildbetrachter"
@@ -74,17 +84,17 @@ msgstr "Falsches Passwort!"
 msgid "Setup"
 msgstr "Einstellungen"
 
-msgid "EtPortal Setup v3.0"
-msgstr "EtPortal Einstellungen v3.0"
+msgid "EtPortal Setup v3.2"
+msgstr "EtPortal Einstellungen v3.2"
 
 msgid "EtPortal Setup"
 msgstr "EtPortal Einstellungen"
 
-msgid "EtPortal Inofficial v3.0"
-msgstr "EtPortal inoffiziel v3.0"
+msgid "EtPortal Inofficial v3.2"
+msgstr "EtPortal inoffiziel v3.2"
 
-msgid "Inofficial v3.0"
-msgstr "inoffiziel v3.0"
+msgid "Inofficial v3.2"
+msgstr "inoffiziel v3.2"
 
 msgid "Info Button: off"
 msgstr "Info Taste: aus"
@@ -96,13 +106,13 @@ msgid "Show following Plugins/Extensions:"
 msgstr "zeige folgende Plugns/Erweiterungen:"
 
 msgid "Adult-Content 18+"
-msgstr "Erotik f�r Erwachsene 18+"
+msgstr "Erotik für Erwachsene 18+"
 
 msgid "Weather"
 msgstr "Wetter"
 
 msgid "Timer Option"
-msgstr "Timer-Uebersicht"
+msgstr "Timer übersicht"
 
 msgid "MSN-Weather"
 msgstr "MSN-Wetter"

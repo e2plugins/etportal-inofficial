@@ -13,7 +13,7 @@ GETTEXT=xgettext
 #MSGFMT = ./msgfmt.py
 MSGFMT = msgfmt
 
-LANGS := de
+LANGS := de 
 LANGPO := $(foreach LANG, $(LANGS),$(LANG).po)
 LANGMO := $(foreach LANG, $(LANGS),$(LANG).mo)
 
@@ -37,8 +37,6 @@ $(DOMAIN).pot:
 	../xml2po.py ../ >> $(DOMAIN).pot
 
 	msguniq -o $(DOMAIN)uniq.pot $(DOMAIN).pot
-	$(RM) $(DOMAIN).pot
-	mv $(DOMAIN)uniq.pot $(DOMAIN).pot
 
 .PHONY: $(DOMAIN).pot
 

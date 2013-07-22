@@ -1,4 +1,4 @@
-CATEGORY ?= "SystemPlugins"
+CATEGORY ?= "Extensions"
 
 plugindir = $(libdir)/enigma2/python/Plugins/$(CATEGORY)/$(PLUGIN)
 
