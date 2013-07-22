@@ -36,7 +36,7 @@ Makefile
 src/Makefile
 src/iceskin/Makefile
 src/pics/Makefile
-src/pics/NobileSkin
+src/pics/NobileSkin/Makefile
 po/Makefile
 tmp/Makefile
 
