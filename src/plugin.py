@@ -125,6 +125,7 @@ config.plugins.EtPortal.moviebrowser = ConfigYesNo(default=True)
 config.plugins.EtPortal.pvmc = ConfigYesNo(default=True)
 config.plugins.EtPortal.webradiofs = ConfigYesNo(default=True)
 config.plugins.EtPortal.isiolive = ConfigYesNo(default=True)
+config.plugins.EtPortal.powertimer = ConfigYesNo(default=True)
 
 config.plugins.EtPortal.none = NoSave(ConfigNothing()) 
 config.plugins.EtPortal.color = ConfigSelection(default='SkinColor_HD', choices=[('ice_HD', _('ice_HD')), ('black_HD', _('black_HD')), ('Nobile_HD', _('Nobile_HD')), ('SkinColor_HD', _('SkinColor_HD')), ('Metrix_FullHD', _('Metrix_FullHD'))])
@@ -307,6 +308,8 @@ class EtPortalScreen(Screen):
             piclist.append(('plugins.png', _('Plugin Browser')))
         if config.plugins.EtPortal.shutdown.value:
             piclist.append(('shutdown.png', _('Sleeptimer and power control')))
+        if fileExists('/usr/lib/enigma2/python/Screens/PowerTimerEdit.pyo') and config.plugins.EtPortal.powertimer.value:
+            piclist.append(('powertimer.png', _('Power Timer')))
         
         posX = 0
         hOffset = BORDER_OFFSET_SIZE
@@ -1027,6 +1030,10 @@ class EtPortalScreen(Screen):
                 didOpen = True
                 url = 'http://193.158.71.207/?device=0008c92148605c99'
                 self.session.open(BrowserRemoteControl, url)
+        elif 'powertimer.png' in self.Thumbnaillist[3][2]:
+            if fileExists('/usr/lib/enigma2/python/Screens/PowerTimerEdit.pyo'):
+                from Screens.PowerTimerEdit import PowerTimerEditList
+                self.session.open(PowerTimerEditList)
         if config.plugins.EtPortal.finalexit.value:
             if 'movie_player.png' in self.Thumbnaillist[3][2] or 'mediaportal.png' in self.Thumbnaillist[3][2]:
                 if config.plugins.EtPortal.finalexit.value == 'True':
@@ -1300,6 +1307,8 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
         else:
             self.list.append(getConfigListEntry(_('Picture Player'), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_('Plugin Browser'), config.plugins.EtPortal.pluginbrowser))
+        if fileExists('/usr/lib/enigma2/python/Screens/PowerTimerEdit.pyo'):
+            self.list.append(getConfigListEntry(_('Power Timer'), config.plugins.EtPortal.powertimer))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/putpattv/plugin.pyo'):
             self.list.append(getConfigListEntry(_('putpat.tv'), config.plugins.EtPortal.putpat))
         else:
