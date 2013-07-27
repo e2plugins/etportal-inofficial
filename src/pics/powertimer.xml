@@ -1,0 +1,4 @@
+<menu text="Standby / Restart" entryID="standby_restart_list">
+	<id val="shutdown" />
+	<item text="PowerTimers" entryID="powertimer_edit"><screen module="PowerTimerEdit" screen="PowerTimerEditList" /></item> 
+</menu>

@@ -93,6 +93,7 @@ config.plugins.EtPortal.dreamexplorer = ConfigYesNo(default=True)
 config.plugins.EtPortal.digitalfernsehen = ConfigYesNo(default=True)
 config.plugins.EtPortal.Chefkoch = ConfigYesNo(default=True)
 config.plugins.EtPortal.bluray = ConfigYesNo(default=True)
+config.plugins.EtPortal.blurayconfig = ConfigSelection(default='List', choices=[('List', _('List')), ('Cover', _('Cover')), ('Cover_Full', _('Cover_Full'))])
 config.plugins.EtPortal.bild = ConfigYesNo(default=True)
 config.plugins.EtPortal.kinode = ConfigYesNo(default=True)
 config.plugins.EtPortal.spiegel = ConfigYesNo(default=True)
@@ -824,9 +825,18 @@ class EtPortalScreen(Screen):
                 self.session.open(digitalTVMain)
         elif 'bluray.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.bluray.value:
-                _temp = __import__('Plugins.Extensions.Blu-ray.plugin', globals(), locals(), ['blurayMain'], -1)
-                blurayMain = _temp.blurayMain
-                self.session.open(blurayMain)
+                if config.plugins.EtPortal.blurayconfig.value == 'List':
+                    _temp = __import__('Plugins.Extensions.Blu-ray.plugin', globals(), locals(), ['blurayMainList'], -1)
+                    blurayMainList = _temp.blurayMainList
+                    self.session.open(blurayMainList)
+                elif config.plugins.EtPortal.blurayconfig.value == 'Cover':
+                    _temp = __import__('Plugins.Extensions.Blu-ray.plugin', globals(), locals(), ['blurayMainCover'], -1)
+                    blurayMainCover = _temp.blurayMainCover
+                    self.session.open(blurayMainCover)
+                elif config.plugins.EtPortal.blurayconfig.value == 'Cover_Full':
+                    _temp = __import__('Plugins.Extensions.Blu-ray.plugin', globals(), locals(), ['blurayMainCoverFull'], -1)
+                    blurayMainCoverFull = _temp.blurayMainCoverFull
+                    self.session.open(blurayMainCoverFull)
         elif 'bild.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.bild.value:
                 from Plugins.Extensions.BILDOnline.plugin import *
@@ -1032,8 +1042,10 @@ class EtPortalScreen(Screen):
                 self.session.open(BrowserRemoteControl, url)
         elif 'powertimer.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Screens/PowerTimerEdit.pyo'):
-                from Screens.PowerTimerEdit import PowerTimerEditList
-                self.session.open(PowerTimerEditList)
+                from Screens.Menu import MainMenu
+                import xml.etree.cElementTree
+                menu = xml.etree.cElementTree.parse(SHARED_DIR_PATH + 'powertimer.xml').getroot()
+                self.session.open(MainMenu, menu)
         if config.plugins.EtPortal.finalexit.value:
             if 'movie_player.png' in self.Thumbnaillist[3][2] or 'mediaportal.png' in self.Thumbnaillist[3][2]:
                 if config.plugins.EtPortal.finalexit.value == 'True':
@@ -1129,6 +1141,8 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('Bild.de'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Blu-ray/plugin.pyo'):
             self.list.append(getConfigListEntry(_('BLURAY-DISC.de'), config.plugins.EtPortal.bluray))
+            if config.plugins.EtPortal.bluray.value == True:
+                self.list.append(getConfigListEntry(_('BLURAY-DISC.de      (Start)'), config.plugins.EtPortal.blurayconfig))
         else:
             self.list.append(getConfigListEntry(_('BLURAY-DISC.de'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/burnseries/plugin.pyo'):
