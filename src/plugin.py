@@ -752,9 +752,17 @@ class EtPortalScreen(Screen):
                 from Plugins.Extensions.Foreca.plugin import *
                 self.session.open(ForecaPreview)
         elif 'xbmcwetter.png' in self.Thumbnaillist[3][2]:
-            if config.plugins.EtPortal.xbmcwetter.value:
-                from Plugins.Extensions.xbmcwetter.plugin import *
-                self.session.openWithCallback(closen, xbmcwetter, plugin_path)
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/xbmcWetter/plugin.pyo'):
+                from Screens.PluginBrowser import PluginBrowser
+                from Plugins.Plugin import PluginDescriptor
+                from Components.PluginList import *
+                from Components.PluginComponent import plugins
+                pluginlist = []
+                pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
+                for plugin in pluginlist:
+                    if 'xbmc Wetter' in str(plugin.name):
+                        break
+                plugin(session=self.session)
         elif '1channel.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.onechannel.value:
                 _temp = __import__('Plugins.Extensions.1channel.plugin', globals(), locals(), ['MyMenux'], -1)
