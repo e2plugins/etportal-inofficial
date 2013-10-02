@@ -73,6 +73,7 @@ config.plugins.EtPortal.wetter = ConfigYesNo(default=False)
 config.plugins.EtPortal.weblinks = ConfigYesNo(default=False)
 config.plugins.EtPortal.merlinmusic = ConfigYesNo(default=False)
 config.plugins.EtPortal.foreca = ConfigYesNo(default=False)
+config.plugins.EtPortal.xbmcwetter = ConfigYesNo(default=False)
 config.plugins.EtPortal.onechannel = ConfigYesNo(default=False)
 config.plugins.EtPortal.m2k = ConfigYesNo(default=False)
 config.plugins.EtPortal.m2ks = ConfigYesNo(default=False)
@@ -223,6 +224,8 @@ class EtPortalScreen(Screen):
             piclist.append(('digitalfernsehen.png', _('DiGITAL fernsehen')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Foreca/plugin.pyo') and config.plugins.EtPortal.foreca.value:
             piclist.append(('foreca.png', _('Foreca Weather')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/xbmcWetter/plugin.pyo') and config.plugins.EtPortal.xbmcwetter.value:
+            piclist.append(('xbmcwetter.png', _('xbmc Wetter')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/1channel/plugin.pyo') and config.plugins.EtPortal.onechannel.value:
             piclist.append(('1channel.png', _('1channel')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/myentertainment/plugin.pyo') and config.plugins.EtPortal.myentertainment.value:
@@ -748,6 +751,10 @@ class EtPortalScreen(Screen):
             if config.plugins.EtPortal.foreca.value:
                 from Plugins.Extensions.Foreca.plugin import *
                 self.session.open(ForecaPreview)
+        elif 'xbmcwetter.png' in self.Thumbnaillist[3][2]:
+            if config.plugins.EtPortal.xbmcwetter.value:
+                from Plugins.Extensions.xbmcwetter.plugin import *
+                self.session.openWithCallback(closen, xbmcwetter, plugin_path)
         elif '1channel.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.onechannel.value:
                 _temp = __import__('Plugins.Extensions.1channel.plugin', globals(), locals(), ['MyMenux'], -1)
@@ -1378,6 +1385,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('Weather'), config.plugins.EtPortal.wetter))
         else:
             self.list.append(getConfigListEntry(_('Weather'), config.plugins.EtPortal.none))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/xbmcWetter/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('xbmcWetter'), config.plugins.EtPortal.xbmcwetter))
+        else:
+            self.list.append(getConfigListEntry(_('xbmcWetter'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/plugin.pyo'):
             self.list.append(getConfigListEntry(_('WebBrowser'), config.plugins.EtPortal.webbrowser))
         else:
