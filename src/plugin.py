@@ -128,6 +128,7 @@ config.plugins.EtPortal.webradiofs = ConfigYesNo(default=True)
 config.plugins.EtPortal.isiolive = ConfigYesNo(default=True)
 config.plugins.EtPortal.powertimer = ConfigYesNo(default=True)
 config.plugins.EtPortal.xbmcwetter = ConfigYesNo(default=True)
+config.plugins.EtPortal.tvcharts = ConfigYesNo(default=False)
 
 config.plugins.EtPortal.none = NoSave(ConfigNothing()) 
 config.plugins.EtPortal.color = ConfigSelection(default='SkinColor_HD', choices=[('ice_HD', _('ice_HD')), ('black_HD', _('black_HD')), ('Nobile_HD', _('Nobile_HD')), ('SkinColor_HD', _('SkinColor_HD')), ('Metrix_FullHD', _('Metrix_FullHD'))])
@@ -314,7 +315,9 @@ class EtPortalScreen(Screen):
             piclist.append(('powertimer.png', _('Power Timer')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/xbmcWetter/plugin.pyo') and config.plugins.EtPortal.xbmcwetter.value:
             piclist.append(('xbmcweather.png', _('xbmc Wetter')))
-        
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TVCharts/plugin.pyo') and config.plugins.EtPortal.tvcharts.value:
+            piclist.append(('tvcharts.png', _('TV Charts')))
+			
         posX = 0
         hOffset = BORDER_OFFSET_SIZE
         for x in range(NUMBER_OF_PICTURES):
@@ -918,6 +921,18 @@ class EtPortalScreen(Screen):
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/skyrecorder/plugin.pyo'):
                 from Plugins.Extensions.skyrecorder.plugin import *
                 self.session.open(SkyRecorderMainScreen)
+        elif 'tvcharts.png' in self.Thumbnaillist[3][2]:
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TVCharts/plugin.pyo'):
+                from Screens.PluginBrowser import PluginBrowser
+                from Plugins.Plugin import PluginDescriptor
+                from Components.PluginList import *
+                from Components.PluginComponent import plugins
+                pluginlist = []
+                pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
+                for plugin in pluginlist:
+                    if 'TV Charts' in str(plugin.name):
+                        break
+                plugin(session=self.session)
         elif 'mp3browser.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MP3Browser/plugin.pyo'):
                 from Plugins.Extensions.MP3Browser.plugin import *
@@ -1371,6 +1386,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('TURKvod IPTV'), config.plugins.EtPortal.turkvod))
         else:
             self.list.append(getConfigListEntry(_('TURKvod IPTV'), config.plugins.EtPortal.none))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TVCharts/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('TV Charts'), config.plugins.EtPortal.tvcharts))
+        else:
+            self.list.append(getConfigListEntry(_('TV Charts'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/tvkino/plugin.pyo'):
             self.list.append(getConfigListEntry(_('TV-Kino.net'), config.plugins.EtPortal.tvkino))
         else:
