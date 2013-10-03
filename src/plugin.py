@@ -54,7 +54,6 @@ config.plugins.EtPortal.Get = ConfigYesNo(default=False)
 config.plugins.EtPortal.movie = ConfigYesNo(default=True)
 config.plugins.EtPortal.emc = ConfigYesNo(default=False)
 config.plugins.EtPortal.dvd = ConfigYesNo(default=False)
-config.plugins.EtPortal.laola = ConfigYesNo(default=False)
 config.plugins.EtPortal.songs = ConfigYesNo(default=False)
 config.plugins.EtPortal.media = ConfigYesNo(default=False)
 config.plugins.EtPortal.picture = ConfigYesNo(default=True)
@@ -86,7 +85,6 @@ config.plugins.EtPortal.shutdown = ConfigYesNo(default=True)
 config.plugins.EtPortal.systeminfo = ConfigYesNo(default=True)
 config.plugins.EtPortal.myentertainment = ConfigYesNo(default=False)
 config.plugins.EtPortal.netzkino = ConfigYesNo(default=False)
-config.plugins.EtPortal.tvkino = ConfigYesNo(default=False)
 config.plugins.EtPortal.hoerspiel = ConfigYesNo(default=False)
 config.plugins.EtPortal.livetvru = ConfigYesNo(default=False)
 config.plugins.EtPortal.dreamexplorer = ConfigYesNo(default=True)
@@ -173,8 +171,6 @@ class EtPortalScreen(Screen):
             piclist.append(('iptv.png', _('IPTV-List Updater')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/cinestreamer/plugin.pyo') and config.plugins.EtPortal.cinestream.value:
             piclist.append(('cinestream.png', _('CineStream')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/laola1tvlive/plugin.pyo') and config.plugins.EtPortal.laola.value:
-            piclist.append(('laolatv.png', _('laola1.tv')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/songs/plugin.pyo') and config.plugins.EtPortal.songs.value:
             piclist.append(('songs.png', _('Songs.to')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/kinokiste/plugin.pyo') and config.plugins.EtPortal.kinokiste.value:
@@ -227,12 +223,10 @@ class EtPortalScreen(Screen):
             piclist.append(('foreca.png', _('Foreca Weather')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/1channel/plugin.pyo') and config.plugins.EtPortal.onechannel.value:
             piclist.append(('1channel.png', _('1channel')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/myentertainment/plugin.pyo') and config.plugins.EtPortal.myentertainment.value:
-            piclist.append(('my-entertainment.png', _('My-Entertainment.biz')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/PremiumEntertain/plugin.pyo') and config.plugins.EtPortal.myentertainment.value:
+            piclist.append(('my-entertainment.png', _('My-Entertainment Premium')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/netzkino/plugin.pyo') and config.plugins.EtPortal.netzkino.value:
             piclist.append(('netzkino.png', _('NetzKino.de')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/tvkino/plugin.pyo') and config.plugins.EtPortal.tvkino.value:
-            piclist.append(('tv-kino.png', _('TV-Kino.net')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/hoerspiele/plugin.pyo') and config.plugins.EtPortal.hoerspiel.value:
             piclist.append(('hoerspiel.png', _('Hoerspiele.cu.cc')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/livetvru/plugin.pyo') and config.plugins.EtPortal.livetvru.value:
@@ -672,10 +666,6 @@ class EtPortalScreen(Screen):
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/cinestreamer/plugin.pyo'):
                 from Plugins.Extensions.cinestreamer.plugin import *
                 self.session.open(csmain, plugin_path)
-        elif 'laolatv.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/laola1tvlive/plugin.pyo'):
-                from Plugins.Extensions.laola1tvlive.plugin import *
-                self.session.open(laola, plugin_path)
         elif 'songs.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/songs/plugin.pyo'):
                 from Plugins.Extensions.songs.plugin import *
@@ -811,12 +801,16 @@ class EtPortalScreen(Screen):
                 self.session.open(MessageBox, _('wrong password!'), MessageBox.TYPE_INFO, timeout=8)
         elif 'my-entertainment.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.myentertainment.value:
-                from Plugins.Extensions.myentertainment.plugin import *
-                self.session.openWithCallback(closen, enter, plugin_path)
-        elif 'tv-kino.png' in self.Thumbnaillist[3][2]:
-            if config.plugins.EtPortal.tvkino.value:
-                from Plugins.Extensions.tvkino.plugin import *
-                self.session.openWithCallback(closen, tvkino, plugin_path)
+                from Screens.PluginBrowser import PluginBrowser
+                from Plugins.Plugin import PluginDescriptor
+                from Components.PluginList import *
+                from Components.PluginComponent import plugins
+                pluginlist = []
+                pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
+                for plugin in pluginlist:
+                    if 'MyPremiumEntertain' in str(plugin.name):
+                        break
+                plugin(session=self.session)
         elif 'netzkino.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.netzkino.value:
                 from Plugins.Extensions.netzkino.plugin import *
@@ -1258,10 +1252,6 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('KinoKiste'), config.plugins.EtPortal.kinokiste))
         else:
             self.list.append(getConfigListEntry(_('KinoKiste'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/laola1tvlive/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('laola1.tv'), config.plugins.EtPortal.laola))
-        else:
-            self.list.append(getConfigListEntry(_('laola1.tv'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/livetvru/plugin.pyo'):
             self.list.append(getConfigListEntry(_('LiveTV.ru'), config.plugins.EtPortal.livetvru))
         else:
@@ -1312,10 +1302,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('MUZU.TV'), config.plugins.EtPortal.muzutv))
         else:
             self.list.append(getConfigListEntry(_('MUZU.TV'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/myentertainment/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('My-Entertainment.biz'), config.plugins.EtPortal.myentertainment))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/PremiumEntertain/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('My-Entertainment Premium'), config.plugins.EtPortal.myentertainment))
         else:
-            self.list.append(getConfigListEntry(_('My-Entertainment.biz'), config.plugins.EtPortal.none))
+            self.list.append(getConfigListEntry(_('My-Entertainment Premium'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MyTube/plugin.pyo'):
             self.list.append(getConfigListEntry(_('MyTube'), config.plugins.EtPortal.mytube))
         else:
@@ -1390,10 +1380,6 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('TV Charts'), config.plugins.EtPortal.tvcharts))
         else:
             self.list.append(getConfigListEntry(_('TV Charts'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/tvkino/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('TV-Kino.net'), config.plugins.EtPortal.tvkino))
-        else:
-            self.list.append(getConfigListEntry(_('TV-Kino.net'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TVSpielfilm/plugin.pyo'):
             self.list.append(getConfigListEntry(_('TVSpielfilm'), config.plugins.EtPortal.tvspielfilm))
         else:
