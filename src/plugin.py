@@ -934,7 +934,13 @@ class EtPortalScreen(Screen):
         elif 'moviebrowser.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MovieBrowser/plugin.pyo'):
                 from Plugins.Extensions.MovieBrowser.plugin import *
-                self.session.open(movieBrowserBackdrop, 0, config.plugins.moviebrowser.filter.value, config.plugins.moviebrowser.filter.value)
+                from Components.PluginComponent import plugins
+                plugin = _('Movie Browser')
+                for p in plugins.getPlugins(where=[PluginDescriptor.WHERE_EXTENSIONSMENU, PluginDescriptor.WHERE_PLUGINMENU]):
+                    if 'Movie Browser' == str(p.name):
+                        plugin = p
+                if plugin is not None:
+                    plugin(session=self.session)
         elif 'valerie.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/ProjectValerie/plugin.pyo'):
                 from Plugins.Extensions.ProjectValerie.plugin import *
