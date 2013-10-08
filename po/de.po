@@ -117,6 +117,3 @@ msgstr "Timer übersicht"
 msgid "MSN-Weather"
 msgstr "MSN-Wetter"
 
-#~msgid ""
-#~msgstr ""
-
