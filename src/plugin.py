@@ -930,7 +930,13 @@ class EtPortalScreen(Screen):
         elif 'mp3browser.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MP3Browser/plugin.pyo'):
                 from Plugins.Extensions.MP3Browser.plugin import *
-                self.session.open(mp3Browser)
+                from Components.PluginComponent import plugins
+                plugin = _('MP3 Browser')
+                for p in plugins.getPlugins(where=[PluginDescriptor.WHERE_EXTENSIONSMENU, PluginDescriptor.WHERE_PLUGINMENU]):
+                    if 'MP3 Browser' == str(p.name):
+                        plugin = p
+                if plugin is not None:
+                    plugin(session=self.session)
         elif 'moviebrowser.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MovieBrowser/plugin.pyo'):
                 from Plugins.Extensions.MovieBrowser.plugin import *
