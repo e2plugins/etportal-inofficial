@@ -127,6 +127,8 @@ config.plugins.EtPortal.isiolive = ConfigYesNo(default=True)
 config.plugins.EtPortal.powertimer = ConfigYesNo(default=True)
 config.plugins.EtPortal.xbmcwetter = ConfigYesNo(default=True)
 config.plugins.EtPortal.tvcharts = ConfigYesNo(default=False)
+config.plugins.EtPortal.mediainfo = ConfigYesNo(default=True)
+config.plugins.EtPortal.downloadcenter = ConfigYesNo(default=True)
 
 config.plugins.EtPortal.none = NoSave(ConfigNothing()) 
 config.plugins.EtPortal.color = ConfigSelection(default='SkinColor_HD', choices=[('ice_HD', _('ice_HD')), ('black_HD', _('black_HD')), ('Nobile_HD', _('Nobile_HD')), ('SkinColor_HD', _('SkinColor_HD')), ('Metrix_FullHD', _('Metrix_FullHD'))])
@@ -311,6 +313,10 @@ class EtPortalScreen(Screen):
             piclist.append(('xbmcweather.png', _('xbmc Wetter')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TVCharts/plugin.pyo') and config.plugins.EtPortal.tvcharts.value:
             piclist.append(('tvcharts.png', _('TV Charts')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/mediainfo/plugin.pyo') and config.plugins.EtPortal.mediainfo.value:
+            piclist.append(('mediainfo.png', _('MediaInfo')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/downloadcenter/plugin.pyo') and config.plugins.EtPortal.downloadcenter.value:
+            piclist.append(('downloadcenter.png', _('DownloadCenter')))
 			
         posX = 0
         hOffset = BORDER_OFFSET_SIZE
@@ -1080,6 +1086,30 @@ class EtPortalScreen(Screen):
                         plugin = p
                 if plugin is not None:
                     plugin(session=self.session)
+        elif 'mediainfo.png' in self.Thumbnaillist[3][2]:
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/mediainfo/plugin.pyo'):
+                from Screens.PluginBrowser import PluginBrowser
+                from Plugins.Plugin import PluginDescriptor
+                from Components.PluginList import *
+                from Components.PluginComponent import plugins
+                pluginlist = []
+                pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
+                for plugin in pluginlist:
+                    if 'MediaInfo' in str(plugin.name):
+                        break
+                plugin(session=self.session)
+        elif 'downloadcenter.png' in self.Thumbnaillist[3][2]:
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/downloadcenter/plugin.pyo'):
+                from Screens.PluginBrowser import PluginBrowser
+                from Plugins.Plugin import PluginDescriptor
+                from Components.PluginList import *
+                from Components.PluginComponent import plugins
+                pluginlist = []
+                pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
+                for plugin in pluginlist:
+                    if 'DownloadCenter' in str(plugin.name):
+                        break
+                plugin(session=self.session)
         if config.plugins.EtPortal.finalexit.value:
             if 'movie_player.png' in self.Thumbnaillist[3][2] or 'mediaportal.png' in self.Thumbnaillist[3][2]:
                 if config.plugins.EtPortal.finalexit.value == 'True':
@@ -1203,6 +1233,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('Dokumonster'), config.plugins.EtPortal.doku))
         else:
             self.list.append(getConfigListEntry(_('Dokumonster'), config.plugins.EtPortal.none))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/downloadcenter/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('DownloadCenter'), config.plugins.EtPortal.downloadcenter))
+        else:
+            self.list.append(getConfigListEntry(_('DownloadCenter'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/DVDPlayer/keymap.xml'):
             self.list.append(getConfigListEntry(_('DVD-Player'), config.plugins.EtPortal.dvd))
         else:
@@ -1272,6 +1306,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('Loads7'), config.plugins.EtPortal.loads7))
         else:
             self.list.append(getConfigListEntry(_('Loads7'), config.plugins.EtPortal.none))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/mediainfo/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('MediaInfo'), config.plugins.EtPortal.mediainfo))
+        else:
+            self.list.append(getConfigListEntry(_('MediaInfo'), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_('Media-Player'), config.plugins.EtPortal.media))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MediaPortal/plugin.pyo'):
             self.list.append(getConfigListEntry(_('Media Portal'), config.plugins.EtPortal.mediaportal))
