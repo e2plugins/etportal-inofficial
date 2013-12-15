@@ -28,7 +28,7 @@ from Components.PluginList import *
 from Components.Pixmap import MovingPixmap
 from __init__ import _
 
-EtPortal_version = '3.2'
+EtPortalVersion = '3.3'
 SHARED_DIR_PATH = '/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/pics/'
 
 IMAGE_SIZE = 128
@@ -129,6 +129,8 @@ config.plugins.EtPortal.xbmcwetter = ConfigYesNo(default=True)
 config.plugins.EtPortal.tvcharts = ConfigYesNo(default=False)
 config.plugins.EtPortal.mediainfo = ConfigYesNo(default=True)
 config.plugins.EtPortal.downloadcenter = ConfigYesNo(default=True)
+config.plugins.EtPortal.fragmutti = ConfigYesNo(default=True)
+config.plugins.EtPortal.xbmcaddons = ConfigYesNo(default=True)
 
 config.plugins.EtPortal.none = NoSave(ConfigNothing()) 
 config.plugins.EtPortal.color = ConfigSelection(default='SkinColor_HD', choices=[('ice_HD', _('ice_HD')), ('black_HD', _('black_HD')), ('Nobile_HD', _('Nobile_HD')), ('SkinColor_HD', _('SkinColor_HD')), ('Metrix_FullHD', _('Metrix_FullHD'))])
@@ -317,6 +319,10 @@ class EtPortalScreen(Screen):
             piclist.append(('mediainfo.png', _('MediaInfo')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/downloadcenter/plugin.pyo') and config.plugins.EtPortal.downloadcenter.value:
             piclist.append(('downloadcenter.png', _('DownloadCenter')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/FragMutti/plugin.pyo') and config.plugins.EtPortal.fragmutti.value:
+            piclist.append(('fragmutti.png', _('Frag - Mutti')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/XBMCAddons/plugin.pyo') and config.plugins.EtPortal.xbmcaddons.value:
+            piclist.append(('xbmcaddons.png', _('xbmc - addons')))
 			
         posX = 0
         hOffset = BORDER_OFFSET_SIZE
@@ -1110,6 +1116,30 @@ class EtPortalScreen(Screen):
                     if 'DownloadCenter' in str(plugin.name):
                         break
                 plugin(session=self.session)
+        elif 'fragmutti.png' in self.Thumbnaillist[3][2]:
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/FragMutti/plugin.pyo'):
+                from Screens.PluginBrowser import PluginBrowser
+                from Plugins.Plugin import PluginDescriptor
+                from Components.PluginList import *
+                from Components.PluginComponent import plugins
+                pluginlist = []
+                pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
+                for plugin in pluginlist:
+                    if 'Frag Mutti' in str(plugin.name):
+                        break
+                plugin(session=self.session)
+        elif 'downloadcenter.png' in self.Thumbnaillist[3][2]:
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/XBMCAddons/plugin.pyo'):
+                from Screens.PluginBrowser import PluginBrowser
+                from Plugins.Plugin import PluginDescriptor
+                from Components.PluginList import *
+                from Components.PluginComponent import plugins
+                pluginlist = []
+                pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
+                for plugin in pluginlist:
+                    if 'XBMCAddons' in str(plugin.name):
+                        break
+                plugin(session=self.session)
         if config.plugins.EtPortal.finalexit.value:
             if 'movie_player.png' in self.Thumbnaillist[3][2] or 'mediaportal.png' in self.Thumbnaillist[3][2]:
                 if config.plugins.EtPortal.finalexit.value == 'True':
@@ -1148,7 +1178,7 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
 		    <widget source="key_red" render="Label" position="48,771" size="260,60" zPosition="1" font="Regular;36" valign="center" halign="left" foregroundColor="#ffffff" transparent="1" />
 		    <eLabel position="325,771" size="10,60" zPosition="1" backgroundColor="#00389416" />
 		    <widget source="key_green" render="Label" position="348,771" size="260,60" zPosition="1" font="Regular;36" valign="center" halign="left" foregroundColor="#ffffff" transparent="1" />
-	    </screen>""" % (EtPortal_version, _("Setup"))
+	    </screen>""" % (EtPortalVersion, _("Setup"))
     else:
         skin = """
 	    <screen position="c-300,c-250" size="600,500" title="EtPortal %s %s">
@@ -1157,7 +1187,7 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
 		    <ePixmap pixmap="skin_default/buttons/green.png" position="160,e-45" size="140,40" alphatest="on" />
 		    <widget source="key_red" render="Label" position="20,e-45" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
 		    <widget source="key_green" render="Label" position="160,e-45" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-	    </screen>""" % (EtPortal_version, _("Setup"))
+	    </screen>""" % (EtPortalVersion, _("Setup"))
 	    
     def __init__(self, session):
         self.skin = EtPortalSetupScreen.skin
@@ -1266,6 +1296,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('GreekStreamTV'), config.plugins.EtPortal.greekstreamtv))
         else:
             self.list.append(getConfigListEntry(_('GreekStreamTV'), config.plugins.EtPortal.none))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/FragMutti/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('Frag - Mutti'), config.plugins.EtPortal.fragmutti))
+        else:
+            self.list.append(getConfigListEntry(_('Frag - Mutti'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/hoerspiele/plugin.pyo'):
             self.list.append(getConfigListEntry(_('Hoerspiele'), config.plugins.EtPortal.hoerspiel))
         else:
@@ -1466,10 +1500,14 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('Wikipedia'), config.plugins.EtPortal.wiki))
         else:
             self.list.append(getConfigListEntry(_('Wikipedia'), config.plugins.EtPortal.none))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/XBMCAddons/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('xbmc - addons'), config.plugins.EtPortal.xbmcaddons))
+        else:
+            self.list.append(getConfigListEntry(_('xbmc - addons'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/xbmcWetter/plugin.pyo'):
             self.list.append(getConfigListEntry(_('Xbmc Wetter'), config.plugins.EtPortal.xbmcwetter))
         else:
-            self.list.append(getConfigListEntry(_('Xbmc Wetter'), config.plugins.EtPortal.none))
+            self.list.append(getConfigListEntry(_('xbmc Wetter'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Xtrend/plugin.pyo'):
             self.list.append(getConfigListEntry(_('Xtrend Support Reader'), config.plugins.EtPortal.xtrend))
         else:
@@ -1581,6 +1619,7 @@ def autostart(reason, **kwargs):
 
 def Plugins(**kwargs):
     return [PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=autostart),
-     PluginDescriptor(name=_('EtPortal Setup v3.2'), description=_('EtPortal Setup'), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main),
-     PluginDescriptor(name=_('EtPortal'), description=_('Inofficial v3.2'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='plugin.png', fnc=main2),
-     PluginDescriptor(name=_('EtPortal Inofficial v3.2'), description=_('EtPortal'), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main3)]
+     #( PluginDescriptor(name = "EMC "+EMCVersion+ " (Setup)", description = "Enhanced Movie Center " +_("configuration"), icon = "EnhancedMovieCenter.png", where = show_p, fnc = pluginOpen)
+     PluginDescriptor(name=_('EtPortal Setup')+" "+EtPortalVersion, description=_('EtPortal Setup'), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main),
+     PluginDescriptor(name=_('EtPortal'), description=_('Inofficial')+" "+EtPortalVersion, where=PluginDescriptor.WHERE_PLUGINMENU, icon='plugin.png', fnc=main2),
+     PluginDescriptor(name=_('EtPortal Inofficial')+" "+EtPortalVersion, description=_('EtPortal'), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main3)]
