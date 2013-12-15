@@ -84,7 +84,6 @@ config.plugins.EtPortal.pluginbrowser = ConfigYesNo(default=True)
 config.plugins.EtPortal.shutdown = ConfigYesNo(default=True)
 config.plugins.EtPortal.systeminfo = ConfigYesNo(default=True)
 config.plugins.EtPortal.myentertainment = ConfigYesNo(default=False)
-config.plugins.EtPortal.netzkino = ConfigYesNo(default=False)
 config.plugins.EtPortal.hoerspiel = ConfigYesNo(default=False)
 config.plugins.EtPortal.livetvru = ConfigYesNo(default=False)
 config.plugins.EtPortal.dreamexplorer = ConfigYesNo(default=True)
@@ -229,8 +228,6 @@ class EtPortalScreen(Screen):
             piclist.append(('1channel.png', _('1channel')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/PremiumEntertain/plugin.pyo') and config.plugins.EtPortal.myentertainment.value:
             piclist.append(('my-entertainment.png', _('My-Entertainment Premium')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/netzkino/plugin.pyo') and config.plugins.EtPortal.netzkino.value:
-            piclist.append(('netzkino.png', _('NetzKino.de')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/hoerspiele/plugin.pyo') and config.plugins.EtPortal.hoerspiel.value:
             piclist.append(('hoerspiel.png', _('Hoerspiele.cu.cc')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/livetvru/plugin.pyo') and config.plugins.EtPortal.livetvru.value:
@@ -823,10 +820,6 @@ class EtPortalScreen(Screen):
                     if 'MyPremiumEntertain' in str(plugin.name):
                         break
                 plugin(session=self.session)
-        elif 'netzkino.png' in self.Thumbnaillist[3][2]:
-            if config.plugins.EtPortal.netzkino.value:
-                from Plugins.Extensions.netzkino.plugin import *
-                self.session.open(netzkino, plugin_path)
         elif 'hoerspiel.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.hoerspiel.value:
                 from Plugins.Extensions.hoerspiele.plugin import *
@@ -1410,10 +1403,6 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('Network Browser'), config.plugins.EtPortal.networkbrowser))
         else:
             self.list.append(getConfigListEntry(_('Network Browser'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/netzkino/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('NetzKino.de'), config.plugins.EtPortal.netzkino))
-        else:
-            self.list.append(getConfigListEntry(_('NetzKino.de'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OnDemand/plugin.pyo'):
             self.list.append(getConfigListEntry(_('On Demand'), config.plugins.EtPortal.ondemand))
         else:
@@ -1575,21 +1564,21 @@ def main2(session, **kwargs):
     if SkinWidthHD():
         session.open(EtPortalScreen)
     else:
-        session.open(MessageBox, _('EtPortal\n\nSorry.. No Support for Skin Resolution Size: \n\nSD: 720x576 px\nXD: 1024x720 px\n\n________________________________________\n\nSupported: \n\nHD: 1280x720 px\nFullHD: 1920x1080 px'), type=MessageBox.TYPE_INFO, timeout=25)
+        session.open(MessageBox, _('EtPortal\n\nSorry.. No Support for Skin Resolution Size: \n\nSD:  720x576 px\nXD: 1024x720 px\n\n________________________________________\n\nSupported: \n\nHD: 1280x720 px\nFullHD: 1920x1080 px'), type=MessageBox.TYPE_INFO, timeout=25)
 
 
 def main3(session, **kwargs):
     if SkinWidthHD():
         session.open(EtPortalScreen)
     else:
-        session.open(MessageBox, _('EtPortal\n\nSorry.. No Support for Skin Resolution Size: \n\nSD: 720x576 px\nXD: 1024x720 px\n\n________________________________________\n\nSupported: \n\nHD: 1280x720 px\nFullHD: 1920x1080 px'), type=MessageBox.TYPE_INFO, timeout=25)
+        session.open(MessageBox, _('EtPortal\n\nSorry.. No Support for Skin Resolution Size: \n\nSD:  720x576 px\nXD: 1024x720 px\n\n________________________________________\n\nSupported: \n\nHD: 1280x720 px\nFullHD: 1920x1080 px'), type=MessageBox.TYPE_INFO, timeout=25)
 
 
 def markButtonHook(self):
     if SkinWidthHD():
         self.session.open(EtPortalScreen)
     else:
-        self.session.open(MessageBox, _('EtPortal\n\nSorry.. No Support for Skin Resolution Size: \n\nSD: 720x576 px\nXD: 1024x720 px\n\n________________________________________\n\nSupported: \n\nHD: 1280x720 px\nFullHD: 1920x1080 px'), type=MessageBox.TYPE_INFO, timeout=25)
+        self.session.open(MessageBox, _('EtPortal\n\nSorry.. No Support for Skin Resolution Size: \n\nSD:  720x576 px\nXD: 1024x720 px\n\n________________________________________\n\nSupported: \n\nHD: 1280x720 px\nFullHD: 1920x1080 px'), type=MessageBox.TYPE_INFO, timeout=25)
 
 
 def timerButtonHook(self):
@@ -1619,7 +1608,6 @@ def autostart(reason, **kwargs):
 
 def Plugins(**kwargs):
     return [PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=autostart),
-     #( PluginDescriptor(name = "EMC "+EMCVersion+ " (Setup)", description = "Enhanced Movie Center " +_("configuration"), icon = "EnhancedMovieCenter.png", where = show_p, fnc = pluginOpen)
      PluginDescriptor(name=_('EtPortal Setup')+" "+EtPortalVersion, description=_('EtPortal Setup'), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main),
      PluginDescriptor(name=_('EtPortal'), description=_('Inofficial')+" "+EtPortalVersion, where=PluginDescriptor.WHERE_PLUGINMENU, icon='plugin.png', fnc=main2),
      PluginDescriptor(name=_('EtPortal Inofficial')+" "+EtPortalVersion, description=_('EtPortal'), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=main3)]
