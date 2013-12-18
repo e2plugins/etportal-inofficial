@@ -1121,7 +1121,7 @@ class EtPortalScreen(Screen):
                     if 'Frag Mutti' in str(plugin.name):
                         break
                 plugin(session=self.session)
-        elif 'downloadcenter.png' in self.Thumbnaillist[3][2]:
+        elif 'xbmcaddons.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/XBMCAddons/plugin.pyo'):
                 from Screens.PluginBrowser import PluginBrowser
                 from Plugins.Plugin import PluginDescriptor
