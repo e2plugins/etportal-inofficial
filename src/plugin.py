@@ -750,9 +750,15 @@ class EtPortalScreen(Screen):
                 servicelist = None
                 self.session.open(MerlinMusicPlayerFileList, servicelist)
         elif 'foreca.png' in self.Thumbnaillist[3][2]:
-            if config.plugins.EtPortal.foreca.value:
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Foreca/plugin.pyo'):
                 from Plugins.Extensions.Foreca.plugin import *
-                self.session.open(ForecaPreview)
+                from Components.PluginComponent import plugins
+                plugin = _("Foreca Wettervorhersage")
+                for p in plugins.getPlugins(where=[PluginDescriptor.WHERE_EXTENSIONSMENU, PluginDescriptor.WHERE_PLUGINMENU]):
+                    if 'Foreca Wettervorhersage' == str(p.name):
+                        plugin = p
+                if plugin is not None:
+                    plugin(session=self.session)
         elif '1channel.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.onechannel.value:
                 _temp = __import__('Plugins.Extensions.1channel.plugin', globals(), locals(), ['MyMenux'], -1)
