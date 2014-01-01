@@ -120,14 +120,25 @@ config.plugins.EtPortal.xbmcaddons = ConfigYesNo(default=True)
 config.plugins.EtPortal.none = NoSave(ConfigNothing()) 
 config.plugins.EtPortal.color = ConfigSelection(default='SkinColor_HD', choices=[('ice_HD', _('ice_HD')), ('black_HD', _('black_HD')), ('Nobile_HD', _('Nobile_HD')), ('SkinColor_HD', _('SkinColor_HD')), ('Metrix_FullHD', _('Metrix_FullHD'))])
 
+
 def writeToVFD(txt):
     if config.plugins.EtPortal.vfd.value:
+        model = '/proc/stb/info/boxtype'
         oled = '/dev/dbox/oled0'
-        if fileExists(oled):
-            tmp = open(oled, 'w')
-            tmp.write(txt[:124])
-            tmp.close()
-
+        if fileExists(oled):                   
+            if fileExists(model):
+                segmentled = open(model).read().strip() 
+                if segmentled == 'odinm7': 
+                    config.plugins.EtPortal.vfd.setValue(False)
+                else:
+                    tmp = open(oled, 'w')
+                    tmp.write(txt[:124])
+                    tmp.close()
+            else:
+                config.plugins.EtPortal.vfd.setValue(False)
+        else:
+            config.plugins.EtPortal.vfd.setValue(False)
+            
 
 class EtPortalScreen(Screen):
     def __init__(self, session):
