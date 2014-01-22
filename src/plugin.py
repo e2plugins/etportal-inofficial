@@ -116,6 +116,7 @@ config.plugins.EtPortal.mediainfo = ConfigYesNo(default=True)
 config.plugins.EtPortal.downloadcenter = ConfigYesNo(default=True)
 config.plugins.EtPortal.fragmutti = ConfigYesNo(default=True)
 config.plugins.EtPortal.xbmcaddons = ConfigYesNo(default=True)
+config.plugins.EtPortal.moviearchiver = ConfigYesNo(default=True)
 
 config.plugins.EtPortal.none = NoSave(ConfigNothing()) 
 config.plugins.EtPortal.color = ConfigSelection(default='SkinColor_HD', choices=[('ice_HD', _('ice_HD')), ('black_HD', _('black_HD')), ('Nobile_HD', _('Nobile_HD')), ('SkinColor_HD', _('SkinColor_HD')), ('Metrix_FullHD', _('Metrix_FullHD'))])
@@ -287,6 +288,8 @@ class EtPortalScreen(Screen):
             piclist.append(('fragmutti.png', _('Frag - Mutti')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/XBMCAddons/plugin.pyo') and config.plugins.EtPortal.xbmcaddons.value:
             piclist.append(('xbmcaddons.png', _('xbmc - addons')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MovieArchiver/plugin.pyo') and config.plugins.EtPortal.moviearchiver.value:
+            piclist.append(('moviearchiver.png', _('Movie Archiver')))
 			
         posX = 0
         hOffset = BORDER_OFFSET_SIZE
@@ -1042,6 +1045,18 @@ class EtPortalScreen(Screen):
                     if 'XBMCAddons' in str(plugin.name):
                         break
                 plugin(session=self.session)
+        elif 'moviearchiver.png' in self.Thumbnaillist[3][2]:
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MovieArchiver/plugin.pyo'):
+                from Screens.PluginBrowser import PluginBrowser
+                from Plugins.Plugin import PluginDescriptor
+                from Components.PluginList import *
+                from Components.PluginComponent import plugins
+                pluginlist = []
+                pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
+                for plugin in pluginlist:
+                    if 'MovieArchiver' in str(plugin.name):
+                        break
+                plugin(session=self.session)
         if config.plugins.EtPortal.finalexit.value:
             if 'movie_player.png' in self.Thumbnaillist[3][2] or 'mediaportal.png' in self.Thumbnaillist[3][2]:
                 if config.plugins.EtPortal.finalexit.value == 'True':
@@ -1228,6 +1243,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
         else:
             self.list.append(getConfigListEntry(_('Merlin-Music Player'), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_('Movielist'), config.plugins.EtPortal.movie))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MovieArchiver/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('Movie Archiver'), config.plugins.EtPortal.moviearchiver))
+        else:
+            self.list.append(getConfigListEntry(_('Movie Archiver'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MovieBrowser/plugin.pyo'):
             self.list.append(getConfigListEntry(_('Movie-Browser'), config.plugins.EtPortal.moviebrowser))
         else:
