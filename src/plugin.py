@@ -236,8 +236,8 @@ class EtPortalScreen(Screen):
             piclist.append(('greekstreamtv.png', _('Greek StreamTV')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MediaPortal/plugin.pyo') and config.plugins.EtPortal.mediaportal.value:
             piclist.append(('mediaportal.png', _('MediaPortal')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Xtrend/plugin.pyo') and config.plugins.EtPortal.xtrend.value:
-            piclist.append(('xtrend.png', _('Xtrend Support Reader')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenXtaReader/plugin.pyo') and config.plugins.EtPortal.xtrend.value:
+            piclist.append(('xtrend.png', _('OpenXTA Forum Reader')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/YampMusicPlayer/plugin.pyo') and config.plugins.EtPortal.yamp.value:
             piclist.append(('yamp.png', _('Yamp Music Player')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/SHOUTcast/plugin.pyo') and config.plugins.EtPortal.shoutcast.value:
@@ -667,9 +667,9 @@ class EtPortalScreen(Screen):
                 from Plugins.Extensions.Chefkoch.plugin import *
                 self.session.open(ChefkochMain)
         elif 'xtrend.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Xtrend/plugin.pyo'):
-                from Plugins.Extensions.Xtrend.plugin import *
-                self.session.open(XtrendMain)
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenXtaReader/plugin.pyo'):
+                from Plugins.Extensions.OpenXtaReader.plugin import *
+                self.session.open(OpenXtaMain)
         elif 'merlinmusic.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.merlinmusic.value:
                 from Plugins.Extensions.MerlinMusicPlayer.plugin import *
@@ -1373,10 +1373,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('Xbmc Wetter'), config.plugins.EtPortal.xbmcwetter))
         else:
             self.list.append(getConfigListEntry(_('Xbmc Wetter'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Xtrend/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('Xtrend Support Reader'), config.plugins.EtPortal.xtrend))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenXtaReader/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('OpenXTA Forum Reader'), config.plugins.EtPortal.xtrend))
         else:
-            self.list.append(getConfigListEntry(_('Xtrend Support Reader'), config.plugins.EtPortal.none))
+            self.list.append(getConfigListEntry(_('OpenXTA Forum Reader'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/YampMusicPlayer/plugin.pyo'):
             self.list.append(getConfigListEntry(_('Yamp Music Player'), config.plugins.EtPortal.yamp))
         else:
