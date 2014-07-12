@@ -84,7 +84,6 @@ config.plugins.EtPortal.kinode = ConfigYesNo(default=True)
 config.plugins.EtPortal.spiegel = ConfigYesNo(default=True)
 config.plugins.EtPortal.focus = ConfigYesNo(default=True)
 config.plugins.EtPortal.wiki = ConfigYesNo(default=True)
-config.plugins.EtPortal.doku = ConfigYesNo(default=True)
 config.plugins.EtPortal.kicker = ConfigYesNo(default=False)
 config.plugins.EtPortal.kickerticker = ConfigYesNo(default=False)
 config.plugins.EtPortal.verkehrsinfo = ConfigYesNo(default=True)
@@ -117,6 +116,7 @@ config.plugins.EtPortal.downloadcenter = ConfigYesNo(default=True)
 config.plugins.EtPortal.fragmutti = ConfigYesNo(default=True)
 config.plugins.EtPortal.xbmcaddons = ConfigYesNo(default=True)
 config.plugins.EtPortal.moviearchiver = ConfigYesNo(default=True)
+config.plugins.EtPortal.tanken = ConfigYesNo(default=True)
 
 config.plugins.EtPortal.none = NoSave(ConfigNothing()) 
 config.plugins.EtPortal.color = ConfigSelection(default='SkinColor_HD', choices=[('ice_HD', _('ice_HD')), ('black_HD', _('black_HD')), ('Nobile_HD', _('Nobile_HD')), ('SkinColor_HD', _('SkinColor_HD')), ('Metrix_FullHD', _('Metrix_FullHD'))])
@@ -218,8 +218,8 @@ class EtPortalScreen(Screen):
             piclist.append(('wiki.png', _('Wikipedia')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MUZUtv/plugin.pyo') and config.plugins.EtPortal.muzutv.value:
             piclist.append(('muzutv.png', _('MUZU.TV')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/dokumonster/plugin.pyo') and config.plugins.EtPortal.doku.value:
-            piclist.append(('doku.png', _('dokumonster')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/clever-tanken/plugin.pyo') and config.plugins.EtPortal.tanken.value:
+            piclist.append(('tanken.png', _('clever-tanken.de')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/kicker/plugin.pyo') and config.plugins.EtPortal.kicker.value:
             piclist.append(('kicker.png', _('Kicker Online')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/kicker/plugin.pyo') and config.plugins.EtPortal.kickerticker.value:
@@ -645,10 +645,11 @@ class EtPortalScreen(Screen):
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/putpattv/plugin.pyo'):
                 from Plugins.Extensions.putpattv.plugin import *
                 self.session.openWithCallback(closen, putpat, False, start_point_now, plugin_path)
-        elif 'doku.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/dokumonster/plugin.pyo'):
-                from Plugins.Extensions.dokumonster.plugin import *
-                self.session.open(dokumonster, plugin_path)
+        elif 'tanken.png' in self.Thumbnaillist[3][2]:
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/clever-tanken/plugin.pyo'):
+                _temp = __import__('Plugins.Extensions.clever-tanken.plugin', globals(), locals(), ['clevertankenMain'], -1)
+                clevertankenMain = _temp.clevertankenMain
+                self.session.open(clevertankenMain)
         elif 'myvideo.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/chartsplayer/plugin.pyo'):
                 from Plugins.Extensions.chartsplayer.plugin import *
@@ -1160,6 +1161,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('Chefkoch.de'), config.plugins.EtPortal.Chefkoch))
         else:
             self.list.append(getConfigListEntry(_('Chefkoch.de'), config.plugins.EtPortal.none))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/clever-tanken/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('clever-tanken.de'), config.plugins.EtPortal.tanken))
+        else:
+            self.list.append(getConfigListEntry(_('clever-tanken.de'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/CuBiCStreamer/plugin.pyo'):
             self.list.append(getConfigListEntry(_('CuBiC Streamer'), config.plugins.EtPortal.cubicstreamer))
         else:
@@ -1168,10 +1173,6 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('DiGITAL fernsehen'), config.plugins.EtPortal.digitalfernsehen))
         else:
             self.list.append(getConfigListEntry(_('DiGITAL fernsehen'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/dokumonster/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('Dokumonster'), config.plugins.EtPortal.doku))
-        else:
-            self.list.append(getConfigListEntry(_('Dokumonster'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/downloadcenter/plugin.pyo'):
             self.list.append(getConfigListEntry(_('DownloadCenter'), config.plugins.EtPortal.downloadcenter))
         else:
