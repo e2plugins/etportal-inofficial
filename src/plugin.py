@@ -28,7 +28,7 @@ from Components.PluginList import *
 from Components.Pixmap import MovingPixmap
 from __init__ import _
 
-EtPortalVersion = '3.3'
+EtPortalVersion = '3.4'
 SHARED_DIR_PATH = '/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/pics/'
 
 IMAGE_SIZE = 128
@@ -154,10 +154,13 @@ class EtPortalScreen(Screen):
             piclist.append(('information.png', _('System information')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/plugin.pyo') and config.plugins.EtPortal.dreamexplorer.value:
             piclist.append(('dreamexplorer.png', _('DreamExplorer')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/DVDPlayer/keymap.xml') and config.plugins.EtPortal.dvd.value:
-            piclist.append(('dvd_player.png', _('DVD Player')))
-        if fileExists('/usr/lib/enigma2/python/Screens/DVD.pyo') and config.plugins.EtPortal.dvd.value:
-            piclist.append(('dvd_player.png', _('DVD Player')))
+        if config.plugins.EtPortal.dvd.value:
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/DVDPlayer/keymap.xml') and fileExists('/usr/lib/enigma2/python/Screens/DVD.pyo'):
+                piclist.append(('dvd_player.png', _('DVD Player')))
+            if not fileExists('/usr/lib/enigma2/python/Plugins/Extensions/DVDPlayer/keymap.xml') and ('/usr/lib/enigma2/python/Screens/DVD.pyo'):
+                piclist.append(('dvd_player.png', _('DVD Player')))
+            if not fileExists('/usr/lib/enigma2/python/Screens/DVD.pyo') and ('/usr/lib/enigma2/python/Plugins/Extensions/DVDPlayer/keymap.xml'):
+                piclist.append(('dvd_player.png', _('DVD Player')))
         if config.plugins.EtPortal.media.value:
             piclist.append(('media_player.png', _('Media Player')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/EnhancedMovieCenter/plugin.pyo') and config.plugins.EtPortal.emc.value:
