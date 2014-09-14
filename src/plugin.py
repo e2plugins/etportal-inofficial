@@ -28,7 +28,7 @@ from Components.PluginList import *
 from Components.Pixmap import MovingPixmap
 from __init__ import _
 
-EtPortalVersion = '3.4'
+EtPortalVersion = '3.5'
 SHARED_DIR_PATH = '/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/pics/'
 
 IMAGE_SIZE = 128
@@ -75,6 +75,7 @@ config.plugins.EtPortal.shutdown = ConfigYesNo(default=True)
 config.plugins.EtPortal.systeminfo = ConfigYesNo(default=True)
 config.plugins.EtPortal.myentertainment = ConfigYesNo(default=False)
 config.plugins.EtPortal.dreamexplorer = ConfigYesNo(default=True)
+config.plugins.EtPortal.dreamplex = ConfigYesNo(default=False)
 config.plugins.EtPortal.digitalfernsehen = ConfigYesNo(default=True)
 config.plugins.EtPortal.Chefkoch = ConfigYesNo(default=True)
 config.plugins.EtPortal.bluray = ConfigYesNo(default=True)
@@ -154,6 +155,8 @@ class EtPortalScreen(Screen):
             piclist.append(('information.png', _('System information')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/plugin.pyo') and config.plugins.EtPortal.dreamexplorer.value:
             piclist.append(('dreamexplorer.png', _('DreamExplorer')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/DreamPlex/plugin.pyo') and config.plugins.EtPortal.dreamplex.value:
+            piclist.append(('dreamplex.png', _('DreamPlex')))
         if config.plugins.EtPortal.dvd.value:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/DVDPlayer/keymap.xml') and fileExists('/usr/lib/enigma2/python/Screens/DVD.pyo'):
                 piclist.append(('dvd_player.png', _('DVD Player')))
@@ -228,9 +231,9 @@ class EtPortalScreen(Screen):
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/kicker/plugin.pyo') and config.plugins.EtPortal.kickerticker.value:
             piclist.append(('kickerticker.png', _('Kicker Live-Ticker')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/verkehrsinfo/plugin.pyo') and config.plugins.EtPortal.verkehrsinfo.value:
-            piclist.append(('verkehrsinfo.png', _('verkehrsinfo.de')))
+            piclist.append(('verkehrsinfo.png', _('Verkehrsinfo.de')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Facebook/plugin.pyo') and config.plugins.EtPortal.facebook.value:
-            piclist.append(('facebook.png', _('facebook')))
+            piclist.append(('facebook.png', _('Facebook')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/CuBiCStreamer/plugin.pyo') and config.plugins.EtPortal.cubicstreamer.value:
             piclist.append(('cubic.png', _('Cubic Streamer')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TURKvod/plugin.pyo') and config.plugins.EtPortal.turkvod.value:
@@ -252,9 +255,9 @@ class EtPortalScreen(Screen):
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/skyrecorder/plugin.pyo') and config.plugins.EtPortal.skyrecorder.value:
             piclist.append(('skyrecorder.png', _('sky recorder')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MyvideoPlus/plugin.pyo') and config.plugins.EtPortal.myvideoplus.value:
-            piclist.append(('myvideoplus.png', _('MyVideo-Plus')))
+            piclist.append(('myvideoplus.png', _('MyVideo - Plus')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/YoutubePlus/plugin.pyo') and config.plugins.EtPortal.youtubeplus.value:
-            piclist.append(('youtubeplus.png', _('YouTube-Plus')))
+            piclist.append(('youtubeplus.png', _('YouTube - Plus')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OnDemand/plugin.pyo') and config.plugins.EtPortal.ondemand.value:
             piclist.append(('ondemand.png', _('On Demand')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MP3Browser/plugin.pyo') and config.plugins.EtPortal.mp3browser.value:
@@ -620,6 +623,11 @@ class EtPortalScreen(Screen):
                         plugin = p
                 if plugin is not None:
                     plugin(session=self.session)
+        elif 'dreamplex.png' in self.Thumbnaillist[3][2]:
+            if config.plugins.EtPortal.dreamplex.value:
+                from Plugins.Extensions.DreamPlex.plugin import *
+                from Components.PluginComponent import plugins
+                self.session.open(DPS_MainMenu)
         elif 'emc.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.emc.value:
                 from Plugins.Extensions.EnhancedMovieCenter.plugin import *
@@ -1188,15 +1196,19 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('DreamExplorer'), config.plugins.EtPortal.dreamexplorer))
         else:
             self.list.append(getConfigListEntry(_('DreamExplorer'), config.plugins.EtPortal.none))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/DreamPlex/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('DreamPlex'), config.plugins.EtPortal.dreamplex))
+        else:
+            self.list.append(getConfigListEntry(_('DreamPlex'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/EnhancedMovieCenter/plugin.pyo'):
             self.list.append(getConfigListEntry(_('EMC'), config.plugins.EtPortal.emc))
         else:
             self.list.append(getConfigListEntry(_('EMC'), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_('Extension Plugins and applications'), config.plugins.EtPortal.extensions))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Facebook/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('facebook'), config.plugins.EtPortal.facebook))
+            self.list.append(getConfigListEntry(_('Facebook'), config.plugins.EtPortal.facebook))
         else:
-            self.list.append(getConfigListEntry(_('facebook'), config.plugins.EtPortal.none))
+            self.list.append(getConfigListEntry(_('Facebook'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/FOCUSOnline/plugin.pyo'):
             self.list.append(getConfigListEntry(_('Focus ONLINE'), config.plugins.EtPortal.focus))
         else:
@@ -1280,9 +1292,9 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
         else:
             self.list.append(getConfigListEntry(_('MyVideo - Top 100'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MyvideoPlus/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('MyVideo-Plus'), config.plugins.EtPortal.myvideoplus))
+            self.list.append(getConfigListEntry(_('MyVideo - Plus'), config.plugins.EtPortal.myvideoplus))
         else:
-            self.list.append(getConfigListEntry(_('MyVideo-Plus'), config.plugins.EtPortal.none))
+            self.list.append(getConfigListEntry(_('MyVideo - Plus'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/plugin.pyo'):
             self.list.append(getConfigListEntry(_('Network Browser'), config.plugins.EtPortal.networkbrowser))
         else:
@@ -1342,9 +1354,9 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
         else:
             self.list.append(getConfigListEntry(_('Project-Valerie'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/verkehrsinfo/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('verkehrsinfo.de'), config.plugins.EtPortal.verkehrsinfo))
+            self.list.append(getConfigListEntry(_('Verkehrsinfo.de'), config.plugins.EtPortal.verkehrsinfo))
         else:
-            self.list.append(getConfigListEntry(_('verkehrsinfo.de'), config.plugins.EtPortal.none))
+            self.list.append(getConfigListEntry(_('Verkehrsinfo.de'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WeatherPlugin/plugin.pyo'):
             self.list.append(getConfigListEntry(_('Weather'), config.plugins.EtPortal.wetter))
         else:
@@ -1386,9 +1398,9 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
         else:
             self.list.append(getConfigListEntry(_('Yamp Music Player'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/YoutubePlus/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('Youtube-Plus'), config.plugins.EtPortal.youtubeplus))
+            self.list.append(getConfigListEntry(_('Youtube - Plus'), config.plugins.EtPortal.youtubeplus))
         else:
-            self.list.append(getConfigListEntry(_('Youtube-Plus'), config.plugins.EtPortal.none))
+            self.list.append(getConfigListEntry(_('Youtube - Plus'), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_(' '), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_('mod by: mogli123 / icewaere / pcd / koivo'), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_('thx to bla666'), config.plugins.EtPortal.none))

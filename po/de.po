@@ -3,13 +3,13 @@ msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: koivo <koivo@hdfreaks.cc>\n"
+"Last-Translator: Koivo <koivo@hdfreaks.cc>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: de\n"
-"X-Generator: Poedit 1.6.3\n"
+"X-Generator: Poedit 1.6.9\n"
 
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
@@ -59,7 +59,7 @@ msgid "Extension Plugins and applications"
 msgstr "Erweiterungen"
 
 msgid "Sleeptimer and power control"
-msgstr "Standby / Neustart / Asschalt-Timer..."
+msgstr "Standby / Neustart / Ausschalt-Timer"
 
 msgid "Greek StreamTV"
 msgstr "Griechischer TV Streamer"
@@ -113,7 +113,7 @@ msgid "Weather"
 msgstr "Wetter"
 
 msgid "Timer Option"
-msgstr "Timer übersicht"
+msgstr "Timer Übersicht"
 
 msgid "MSN-Weather"
 msgstr "MSN-Wetter"

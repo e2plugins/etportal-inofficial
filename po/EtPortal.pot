@@ -58,7 +58,7 @@ msgid "Extension Plugins and applications"
 msgstr "Erweiterungen"
 
 msgid "Sleeptimer and power control"
-msgstr "Standby / Neustart / Asschalt-Timer..."
+msgstr "Standby / Neustart / Ausschalt-Timer"
 
 msgid "Greek StreamTV"
 msgstr "Griechischer TV Streamer"
@@ -112,7 +112,7 @@ msgid "Weather"
 msgstr "Wetter"
 
 msgid "Timer Option"
-msgstr "Timer übersicht"
+msgstr "Timer Übersicht"
 
 msgid "MSN-Weather"
 msgstr "MSN-Wetter"
