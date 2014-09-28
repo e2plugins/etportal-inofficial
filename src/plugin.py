@@ -28,7 +28,7 @@ from Components.PluginList import *
 from Components.Pixmap import MovingPixmap
 from __init__ import _
 
-EtPortalVersion = '3.5'
+EtPortalVersion = '3.6'
 SHARED_DIR_PATH = '/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/pics/'
 
 IMAGE_SIZE = 128
@@ -59,7 +59,6 @@ config.plugins.EtPortal.picture = ConfigYesNo(default=True)
 config.plugins.EtPortal.mytube = ConfigYesNo(default=False)
 config.plugins.EtPortal.iptv = ConfigYesNo(default=True)
 config.plugins.EtPortal.webmedia = ConfigYesNo(default=False)
-config.plugins.EtPortal.webbrowser = ConfigYesNo(default=False)
 config.plugins.EtPortal.weather = ConfigYesNo(default=False)
 config.plugins.EtPortal.wetter = ConfigYesNo(default=False)
 config.plugins.EtPortal.weblinks = ConfigYesNo(default=False)
@@ -108,7 +107,6 @@ config.plugins.EtPortal.mp3browser = ConfigYesNo(default=True)
 config.plugins.EtPortal.moviebrowser = ConfigYesNo(default=True)
 config.plugins.EtPortal.pvmc = ConfigYesNo(default=True)
 config.plugins.EtPortal.webradiofs = ConfigYesNo(default=True)
-config.plugins.EtPortal.isiolive = ConfigYesNo(default=True)
 config.plugins.EtPortal.powertimer = ConfigYesNo(default=True)
 config.plugins.EtPortal.xbmcwetter = ConfigYesNo(default=True)
 config.plugins.EtPortal.tvcharts = ConfigYesNo(default=False)
@@ -118,6 +116,9 @@ config.plugins.EtPortal.fragmutti = ConfigYesNo(default=True)
 config.plugins.EtPortal.xbmcaddons = ConfigYesNo(default=True)
 config.plugins.EtPortal.moviearchiver = ConfigYesNo(default=True)
 config.plugins.EtPortal.tanken = ConfigYesNo(default=True)
+config.plugins.EtPortal.wikitv = ConfigYesNo(default=True)
+config.plugins.EtPortal.hbbig = ConfigYesNo(default=True)
+config.plugins.EtPortal.operabrowser = ConfigYesNo(default=True)
 
 config.plugins.EtPortal.none = NoSave(ConfigNothing()) 
 config.plugins.EtPortal.color = ConfigSelection(default='SkinColor_HD', choices=[('ice_HD', _('ice_HD')), ('black_HD', _('black_HD')), ('Nobile_HD', _('Nobile_HD')), ('SkinColor_HD', _('SkinColor_HD')), ('Metrix_FullHD', _('Metrix_FullHD'))])
@@ -184,8 +185,12 @@ class EtPortalScreen(Screen):
             piclist.append(('myvideo.png', _('MyVideo - Top 100')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TVSpielfilm/plugin.pyo') and config.plugins.EtPortal.tvspielfilm.value:
             piclist.append(('tvspielfilm.png', _('TV Spielfilm')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/plugin.pyo') and config.plugins.EtPortal.webbrowser.value:
-            piclist.append(('opera.png', _('Web browser')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.operabrowser.value:
+            piclist.append(('opera.png', _('Opera Browser')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.wikitv.value:
+            piclist.append(('wikitv.png', _('Wiki Tv')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.hbbig.value:
+            piclist.append(('hbbig.png', _('HBBig')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/msnWetter/plugin.pyo') and config.plugins.EtPortal.weather.value:
             piclist.append(('wetter.png', _('msn-Wetter')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WeatherPlugin/plugin.pyo') and config.plugins.EtPortal.wetter.value:
@@ -248,9 +253,9 @@ class EtPortalScreen(Screen):
             piclist.append(('yamp.png', _('Yamp Music Player')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/SHOUTcast/plugin.pyo') and config.plugins.EtPortal.shoutcast.value:
             piclist.append(('shoutcast.png', _('SHOUTcast')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/plugin.pyo') and config.plugins.EtPortal.tunein.value:
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.tunein.value:
             piclist.append(('tunein.png', _('tunein Radio')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/plugin.pyo') and config.plugins.EtPortal.ardhbbtv.value:
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.ardhbbtv.value:
             piclist.append(('ardhbbtv.png', _('ARD HbbTV-Portal')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/skyrecorder/plugin.pyo') and config.plugins.EtPortal.skyrecorder.value:
             piclist.append(('skyrecorder.png', _('sky recorder')))
@@ -268,8 +273,6 @@ class EtPortalScreen(Screen):
             piclist.append(('valerie.png', _('Project-Valerie')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/plugin.pyo') and config.plugins.EtPortal.webradiofs.value:
             piclist.append(('webradiofs.png', _('WebRadioFS')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/plugin.pyo') and config.plugins.EtPortal.isiolive.value:
-            piclist.append(('isiolive.png', _('TechniSat ISIO live-Portal')))
         if config.plugins.EtPortal.showtimericon.value:
             piclist.append(('timer.png', _('Timers for recordings')))
         if config.plugins.EtPortal.movie.value:
@@ -909,18 +912,46 @@ class EtPortalScreen(Screen):
                     if 'SHOUTcast' in str(plugin.name):
                         break
                 plugin(session=self.session)
-        elif 'tunein.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/plugin.pyo'):
-                from Plugins.Extensions.WebBrowser.plugin import BrowserRemoteControl
-                didOpen = True
+        elif 'tunein.png' in self.Thumbnaillist[3][2]:            
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo'):
+                from Plugins.Extensions.OpenOpera.plugin import *
+            elif fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
+                from Plugins.Extensions.NXHbbTV.plugin import *
+            browserinstance.start()
+            if browserinstance.is_browser_running() is True:
                 url = 'http://ce.radiotime.com'
-                self.session.open(BrowserRemoteControl, url)
+                browserinstance.showSendUrl(url) 
+                self.session.open(BrowserRemoteControl, True, False)
+        elif 'wikitv.png' in self.Thumbnaillist[3][2]:
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo'):
+                from Plugins.Extensions.OpenOpera.plugin import *
+            elif fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
+                from Plugins.Extensions.NXHbbTV.plugin import * 
+            browserinstance.start()
+            if browserinstance.is_browser_running() is True:
+                url = 'http://portal.primatv.de/wikitv'
+                browserinstance.showSendUrl(url) 
+                self.session.open(BrowserRemoteControl, True, False)
+        elif 'hbbig.png' in self.Thumbnaillist[3][2]:
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo'):
+                from Plugins.Extensions.OpenOpera.plugin import *
+            elif fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
+                from Plugins.Extensions.NXHbbTV.plugin import * 
+            browserinstance.start()
+            if browserinstance.is_browser_running() is True:
+                url = 'http://hbbig.com'
+                browserinstance.showSendUrl(url) 
+                self.session.open(BrowserRemoteControl, True, False)
         elif 'ardhbbtv.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/plugin.pyo'):
-                from Plugins.Extensions.WebBrowser.plugin import BrowserRemoteControl
-                didOpen = True
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo'):
+                from Plugins.Extensions.OpenOpera.plugin import *
+            elif fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
+                from Plugins.Extensions.NXHbbTV.plugin import * 
+            browserinstance.start()
+            if browserinstance.is_browser_running() is True:
                 url = 'http://web.ard.de/hbbtv-portal/index.php'
-                self.session.open(BrowserRemoteControl, url)
+                browserinstance.showSendUrl(url) 
+                self.session.open(BrowserRemoteControl, True, False)
         elif 'turkvod.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TURKvod/plugin.pyo'):
                 from Screens.PluginBrowser import PluginBrowser
@@ -970,12 +1001,12 @@ class EtPortalScreen(Screen):
                         break
                 plugin(session=self.session)
         elif 'opera.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/plugin.pyo'):
-                from Plugins.Extensions.WebBrowser.plugin import BrowserRemoteControl
-            if config.plugins.WebBrowser.hasstartpage.value:
-                self.session.open(BrowserRemoteControl, config.plugins.WebBrowser.startpage.value, config.plugins.WebBrowser.startpagemode.value, config.plugins.WebBrowser.startpageagent.value, False)
-            else:
-                self.session.open(BrowserRemoteControl, '', False, False, True)
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo'):
+                from Plugins.Extensions.OpenOpera.plugin import *
+            elif fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
+                from Plugins.Extensions.NXHbbTV.plugin import * 
+            browserinstance.start()
+            self.session.open(BrowserRemoteControl, False, True)
         elif 'weblinks.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/weblinks.pyo'):
                 from Plugins.Extensions.WebBrowser.weblinks import WebLinksSelectMenu
@@ -987,12 +1018,6 @@ class EtPortalScreen(Screen):
         elif 'plugins.png' in self.Thumbnaillist[3][2]:
             from Screens.PluginBrowser import PluginBrowser
             self.session.open(PluginBrowser)
-        elif 'isiolive.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/plugin.pyo'):
-                from Plugins.Extensions.WebBrowser.plugin import BrowserRemoteControl
-                didOpen = True
-                url = 'http://193.158.71.207/?device=0008c92148605c99'
-                self.session.open(BrowserRemoteControl, url)
         elif 'powertimer.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Screens/PowerTimerEdit.pyo'):
                 from Screens.Menu import MainMenu
@@ -1154,7 +1179,7 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('1channel'), config.plugins.EtPortal.onechannel))
         else:
             self.list.append(getConfigListEntry(_('1channel'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/plugin.pyo'):
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
             self.list.append(getConfigListEntry(_('ARD HbbTV-Portal'), config.plugins.EtPortal.ardhbbtv))
         else:
             self.list.append(getConfigListEntry(_('ARD HbbTV-Portal'), config.plugins.EtPortal.none))
@@ -1225,6 +1250,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('Frag - Mutti'), config.plugins.EtPortal.fragmutti))
         else:
             self.list.append(getConfigListEntry(_('Frag - Mutti'), config.plugins.EtPortal.none))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('HBBig'), config.plugins.EtPortal.hbbig))
+        else:
+            self.list.append(getConfigListEntry(_('HBBig'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/IPTV-List-Updater/plugin.pyo'):
             self.list.append(getConfigListEntry(_('IPTV-List Updater'), config.plugins.EtPortal.iptv))
         else:
@@ -1303,6 +1332,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('On Demand'), config.plugins.EtPortal.ondemand))
         else:
             self.list.append(getConfigListEntry(_('On Demand'), config.plugins.EtPortal.none))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('Opera'), config.plugins.EtPortal.operabrowser))
+        else:
+            self.list.append(getConfigListEntry(_('Opera'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/PicturePlayer/ui.pyo'):
             self.list.append(getConfigListEntry(_('Picture Player'), config.plugins.EtPortal.picture))
         else:
@@ -1328,12 +1361,8 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
         else:
             self.list.append(getConfigListEntry(_('Spiegel ONLINE'), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_('System Information'), config.plugins.EtPortal.systeminfo))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('TechniSat ISIO live-Portal'), config.plugins.EtPortal.isiolive))
-        else:
-            self.list.append(getConfigListEntry(_('TechniSat ISIO live-Portal'), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_('Timer Option'), config.plugins.EtPortal.showtimericon))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/plugin.pyo'):
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
             self.list.append(getConfigListEntry(_('tunein Radio'), config.plugins.EtPortal.tunein))
         else:
             self.list.append(getConfigListEntry(_('tunein Radio'), config.plugins.EtPortal.none))
@@ -1361,10 +1390,6 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('Weather'), config.plugins.EtPortal.wetter))
         else:
             self.list.append(getConfigListEntry(_('Weather'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('WebBrowser'), config.plugins.EtPortal.webbrowser))
-        else:
-            self.list.append(getConfigListEntry(_('WebBrowser'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/weblinks.pyo'):
             self.list.append(getConfigListEntry(_('WebLinks'), config.plugins.EtPortal.weblinks))
         else:
@@ -1381,6 +1406,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('Wikipedia'), config.plugins.EtPortal.wiki))
         else:
             self.list.append(getConfigListEntry(_('Wikipedia'), config.plugins.EtPortal.none))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('Wiki TV'), config.plugins.EtPortal.wikitv))
+        else:
+            self.list.append(getConfigListEntry(_('Wiki TV'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/XBMCAddons/plugin.pyo'):
             self.list.append(getConfigListEntry(_('xbmc - addons'), config.plugins.EtPortal.xbmcaddons))
         else:
