@@ -920,7 +920,7 @@ class EtPortalScreen(Screen):
             browserinstance.start()
             if browserinstance.is_browser_running() is True:
                 url = 'http://ce.radiotime.com'
-                browserinstance.showSendUrl(url, flag = 1) 
+                browserinstance.showSendUrl(url, 1) 
                 self.session.open(BrowserRemoteControl, True, False)
         elif 'wikitv.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo'):
@@ -930,7 +930,7 @@ class EtPortalScreen(Screen):
             browserinstance.start()
             if browserinstance.is_browser_running() is True:
                 url = 'http://portal.primatv.de/wikitv'
-                browserinstance.showSendUrl(url, flag = 1) 
+                browserinstance.showSendUrl(url, 1) 
                 self.session.open(BrowserRemoteControl, True, False)
         elif 'hbbig.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo'):
@@ -940,7 +940,7 @@ class EtPortalScreen(Screen):
             browserinstance.start()
             if browserinstance.is_browser_running() is True:
                 url = 'http://hbbig.com'
-                browserinstance.showSendUrl(url, flag = 1) 
+                browserinstance.showSendUrl(url, 1) 
                 self.session.open(BrowserRemoteControl, True, False)
         elif 'ardhbbtv.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo'):
@@ -950,7 +950,7 @@ class EtPortalScreen(Screen):
             browserinstance.start()
             if browserinstance.is_browser_running() is True:
                 url = 'http://web.ard.de/hbbtv-portal/index.php'
-                browserinstance.showSendUrl(url, flag = 1) 
+                browserinstance.showSendUrl(url, 1) 
                 self.session.open(BrowserRemoteControl, True, False)
         elif 'turkvod.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TURKvod/plugin.pyo'):
