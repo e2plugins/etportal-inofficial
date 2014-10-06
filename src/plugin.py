@@ -61,7 +61,7 @@ config.plugins.EtPortal.iptv = ConfigYesNo(default=True)
 config.plugins.EtPortal.webmedia = ConfigYesNo(default=False)
 config.plugins.EtPortal.weather = ConfigYesNo(default=False)
 config.plugins.EtPortal.wetter = ConfigYesNo(default=False)
-config.plugins.EtPortal.weblinks = ConfigYesNo(default=False)
+config.plugins.EtPortal.weblinks = ConfigYesNo(default=True)
 config.plugins.EtPortal.merlinmusic = ConfigYesNo(default=False)
 config.plugins.EtPortal.foreca = ConfigYesNo(default=False)
 config.plugins.EtPortal.onechannel = ConfigYesNo(default=False)
@@ -195,7 +195,7 @@ class EtPortalScreen(Screen):
             piclist.append(('wetter.png', _('msn-Wetter')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WeatherPlugin/plugin.pyo') and config.plugins.EtPortal.wetter.value:
             piclist.append(('msnweather.png', _('Wetter')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/weblinks.pyo') and config.plugins.EtPortal.weblinks.value:
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Weblinks/plugin.pyo') and config.plugins.EtPortal.weblinks.value:
             piclist.append(('weblinks.png', _('Weblinks plugin')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/pornkiste/plugin.pyo') and config.plugins.EtPortal.adult.value:
             piclist.append(('pornkiste.png', _('PornKiste 18+')))
@@ -1008,8 +1008,8 @@ class EtPortalScreen(Screen):
             browserinstance.start()
             self.session.open(BrowserRemoteControl, False, True)
         elif 'weblinks.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/weblinks.pyo'):
-                from Plugins.Extensions.WebBrowser.weblinks import WebLinksSelectMenu
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Weblinks/plugin.pyo'):
+                from Plugins.Extensions.Weblinks.plugin import WebLinksSelectMenu
                 self.session.open(WebLinksSelectMenu)
         elif 'extensions_plugins.png' in self.Thumbnaillist[3][2]:
             from Screens.InfoBar import InfoBar
@@ -1390,7 +1390,7 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('Weather'), config.plugins.EtPortal.wetter))
         else:
             self.list.append(getConfigListEntry(_('Weather'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebBrowser/weblinks.pyo'):
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Weblinks/plugin.pyo'):
             self.list.append(getConfigListEntry(_('WebLinks'), config.plugins.EtPortal.weblinks))
         else:
             self.list.append(getConfigListEntry(_('Weblinks'), config.plugins.EtPortal.none))
