@@ -119,6 +119,7 @@ config.plugins.EtPortal.tanken = ConfigYesNo(default=True)
 config.plugins.EtPortal.wikitv = ConfigYesNo(default=True)
 config.plugins.EtPortal.hbbig = ConfigYesNo(default=True)
 config.plugins.EtPortal.operabrowser = ConfigYesNo(default=True)
+config.plugins.EtPortal.yahooweather = ConfigYesNo(default=True)
 
 config.plugins.EtPortal.none = NoSave(ConfigNothing()) 
 config.plugins.EtPortal.color = ConfigSelection(default='SkinColor_HD', choices=[('ice_HD', _('ice_HD')), ('black_HD', _('black_HD')), ('Nobile_HD', _('Nobile_HD')), ('SkinColor_HD', _('SkinColor_HD')), ('Metrix_FullHD', _('Metrix_FullHD'))])
@@ -299,6 +300,8 @@ class EtPortalScreen(Screen):
             piclist.append(('xbmcaddons.png', _('xbmc - addons')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MovieArchiver/plugin.pyo') and config.plugins.EtPortal.moviearchiver.value:
             piclist.append(('moviearchiver.png', _('Movie Archiver')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/YahooWeather/plugin.pyo') and config.plugins.EtPortal.yahooweather.value:
+            piclist.append(('yahooweather.png', _('Yahoo Weather')))
 			
         posX = 0
         hOffset = BORDER_OFFSET_SIZE
@@ -1094,6 +1097,10 @@ class EtPortalScreen(Screen):
                     if 'MovieArchiver' in str(plugin.name):
                         break
                 plugin(session=self.session)
+        elif 'yahooweather.png' in self.Thumbnaillist[3][2]:
+            if config.plugins.EtPortal.yahooweather.value:
+                from Plugins.Extensions.YahooWeather.plugin import *
+                self.session.open(MeteoMain)
         if config.plugins.EtPortal.finalexit.value:
             if 'movie_player.png' in self.Thumbnaillist[3][2] or 'mediaportal.png' in self.Thumbnaillist[3][2]:
                 if config.plugins.EtPortal.finalexit.value == 'True':
@@ -1422,6 +1429,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('OpenXTA Forum Reader'), config.plugins.EtPortal.xtrend))
         else:
             self.list.append(getConfigListEntry(_('OpenXTA Forum Reader'), config.plugins.EtPortal.none))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/YahooWeather/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('Yahoo Weather'), config.plugins.EtPortal.yahooweather))
+        else:
+            self.list.append(getConfigListEntry(_('Yahoo Weather'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/YampMusicPlayer/plugin.pyo'):
             self.list.append(getConfigListEntry(_('Yamp Music Player'), config.plugins.EtPortal.yamp))
         else:
