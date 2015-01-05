@@ -120,6 +120,7 @@ config.plugins.EtPortal.wikitv = ConfigYesNo(default=True)
 config.plugins.EtPortal.hbbig = ConfigYesNo(default=True)
 config.plugins.EtPortal.operabrowser = ConfigYesNo(default=True)
 config.plugins.EtPortal.yahooweather = ConfigYesNo(default=True)
+config.plugins.EtPortal.watchmi = ConfigYesNo(default=True)
 
 config.plugins.EtPortal.none = NoSave(ConfigNothing()) 
 config.plugins.EtPortal.color = ConfigSelection(default='SkinColor_HD', choices=[('ice_HD', _('ice_HD')), ('black_HD', _('black_HD')), ('Nobile_HD', _('Nobile_HD')), ('SkinColor_HD', _('SkinColor_HD')), ('Metrix_FullHD', _('Metrix_FullHD'))])
@@ -192,6 +193,8 @@ class EtPortalScreen(Screen):
             piclist.append(('wikitv.png', _('Wiki Tv')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.hbbig.value:
             piclist.append(('hbbig.png', _('HBBig')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.hbbig.value:
+            piclist.append(('watchmi.png', _('Themenkan\xc3\xa4le')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/msnWetter/plugin.pyo') and config.plugins.EtPortal.weather.value:
             piclist.append(('wetter.png', _('msn-Wetter')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WeatherPlugin/plugin.pyo') and config.plugins.EtPortal.wetter.value:
@@ -945,6 +948,16 @@ class EtPortalScreen(Screen):
                 url = 'http://hbbig.com'
                 browserinstance.showSendUrl(url, 1) 
                 self.session.open(BrowserRemoteControl, True, False)
+        elif 'watchmi.png' in self.Thumbnaillist[3][2]:
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo'):
+                from Plugins.Extensions.OpenOpera.plugin import *
+            elif fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
+                from Plugins.Extensions.NXHbbTV.plugin import * 
+            browserinstance.start()
+            if browserinstance.is_browser_running() is True:
+                url = 'http://watchmi-smarttv.api.watchmi.tv/app/watchmi-smarttv/cehtml.cehtml'
+                browserinstance.showSendUrl(url, 1) 
+                self.session.open(BrowserRemoteControl, True, False)
         elif 'ardhbbtv.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo'):
                 from Plugins.Extensions.OpenOpera.plugin import *
@@ -1393,6 +1406,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('Verkehrsinfo.de'), config.plugins.EtPortal.verkehrsinfo))
         else:
             self.list.append(getConfigListEntry(_('Verkehrsinfo.de'), config.plugins.EtPortal.none))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('watchmi'), config.plugins.EtPortal.watchmi))
+        else:
+            self.list.append(getConfigListEntry(_('watchmi'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WeatherPlugin/plugin.pyo'):
             self.list.append(getConfigListEntry(_('Weather'), config.plugins.EtPortal.wetter))
         else:
