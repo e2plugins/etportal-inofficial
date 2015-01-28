@@ -187,13 +187,13 @@ class EtPortalScreen(Screen):
             piclist.append(('myvideo.png', _('MyVideo - Top 100')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TVSpielfilm/plugin.pyo') and config.plugins.EtPortal.tvspielfilm.value:
             piclist.append(('tvspielfilm.png', _('TV Spielfilm')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.operabrowser.value:
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') and config.plugins.EtPortal.operabrowser.value or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.operabrowser.value:
             piclist.append(('opera.png', _('Opera Browser')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.wikitv.value:
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') and config.plugins.EtPortal.wikitv.value or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.wikitv.value:
             piclist.append(('wikitv.png', _('Wiki Tv')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.hbbig.value:
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') and config.plugins.EtPortal.hbbig.value or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.hbbig.value:
             piclist.append(('hbbig.png', _('HBBig')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.hbbig.value:
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') and config.plugins.EtPortal.watchmi.value or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.watchmi.value:
             piclist.append(('watchmi.png', _('Themenkan\xc3\xa4le')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/msnWetter/plugin.pyo') and config.plugins.EtPortal.weather.value:
             piclist.append(('wetter.png', _('msn-Wetter')))
@@ -257,9 +257,9 @@ class EtPortalScreen(Screen):
             piclist.append(('yamp.png', _('Yamp Music Player')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/SHOUTcast/plugin.pyo') and config.plugins.EtPortal.shoutcast.value:
             piclist.append(('shoutcast.png', _('SHOUTcast')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.tunein.value:
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') and config.plugins.EtPortal.tunein.value or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.tunein.value:
             piclist.append(('tunein.png', _('tunein Radio')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.ardhbbtv.value:
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') and config.plugins.EtPortal.ardhbbtv.value or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.ardhbbtv.value:
             piclist.append(('ardhbbtv.png', _('ARD HbbTV-Portal')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/skyrecorder/plugin.pyo') and config.plugins.EtPortal.skyrecorder.value:
             piclist.append(('skyrecorder.png', _('sky recorder')))
