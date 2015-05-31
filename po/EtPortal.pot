@@ -116,3 +116,6 @@ msgstr "Timer Ãœbersicht"
 
 msgid "MSN-Weather"
 msgstr "MSN-Wetter"
+
+msgid "EtPortal:\n\nPlease select at least 7 Extensions in (EtPortal Setup)"
+msgstr "EtPortal:\n\nBitte mindestens 7 Erweiterungen in den (EtPortal Einstellungen) auswählen"

@@ -487,16 +487,13 @@ class EtPortalScreen(Screen):
         offset = 0
         while idx < NUMBER_OF_PICTURES:
             if len(self.filelist) <= self.index + idx:
-                self.Thumbnaillist.append([0,
-                 idx,
-                 self.filelist[offset][1],
-                 self.filelist[offset][2]])
-                offset += 1
+                try:
+                    self.Thumbnaillist.append([0, idx, self.filelist[offset][1], self.filelist[offset][2]])
+                    offset += 1
+                except:
+                    pass
             else:
-                self.Thumbnaillist.append([0,
-                 idx,
-                 self.filelist[offset + self.index][1],
-                 self.filelist[offset + self.index][2]])
+                self.Thumbnaillist.append([0, idx, self.filelist[offset + self.index][1], self.filelist[offset + self.index][2]])
                 offset += 1
                 if len(self.filelist) == self.index + offset:
                     offset = 0
@@ -509,38 +506,43 @@ class EtPortalScreen(Screen):
 		cnt = 0
 		for x in range(NUMBER_OF_PICTURES):
 			cnt += 1
-			if self.Thumbnaillist[x][0] == 0:
-				if self.picload.getThumbnail(self.Thumbnaillist[x][2]) == 1:
-					self.ThumbTimer.start(500, True)
-				else:
-					self.Thumbnaillist[x][0] = 1
-				break
-			elif self.Thumbnaillist[x][0] == 1:
-				self.Thumbnaillist[x][0] = 2
-				ptr = self.picload.getData()
-				if ptr != None:
-					self["thumb" + str(self.Thumbnaillist[x][1])].instance.setPixmap(ptr.__deref__())
-					sc = AVSwitch().getFramebufferScale()
-					tmp = self.Thumbnaillist[x][1] + 1
-					if  tmp == 3:
-						self.picload.setPara([IMAGE_SIZE, IMAGE_SIZE, sc[0], sc[1], False, 1, self.color])
+			try:
+			        if self.Thumbnaillist[x][0] == 0:
+				        if self.picload.getThumbnail(self.Thumbnaillist[x][2]) == 1:
+					        self.ThumbTimer.start(500, True)
+				        else:
+					        self.Thumbnaillist[x][0] = 1
+				        break
+			        elif self.Thumbnaillist[x][0] == 1:
+				        self.Thumbnaillist[x][0] = 2
+				        ptr = self.picload.getData()
+				        if ptr != None:
+					        self["thumb" + str(self.Thumbnaillist[x][1])].instance.setPixmap(ptr.__deref__())
+					        sc = AVSwitch().getFramebufferScale()
+					        tmp = self.Thumbnaillist[x][1] + 1
+					        if  tmp == 3:
+						        self.picload.setPara([IMAGE_SIZE, IMAGE_SIZE, sc[0], sc[1], False, 1, self.color])
 						
-					elif tmp == 2 or tmp == 4:
-						self.picload.setPara([IMAGE_SIZE_S, IMAGE_SIZE_S, sc[0], sc[1], False, 1, self.color])
+					        elif tmp == 2 or tmp == 4:
+						        self.picload.setPara([IMAGE_SIZE_S, IMAGE_SIZE_S, sc[0], sc[1], False, 1, self.color])
 						
-					elif tmp == 1 or tmp == 5:
-						self.picload.setPara([IMAGE_SIZE_XS, IMAGE_SIZE_XS, sc[0], sc[1], False, 1, self.color])
+					        elif tmp == 1 or tmp == 5:
+						        self.picload.setPara([IMAGE_SIZE_XS, IMAGE_SIZE_XS, sc[0], sc[1], False, 1, self.color])
 						
-					else:
-						self.picload.setPara([IMAGE_SIZE_XXS, IMAGE_SIZE_XXS, sc[0], sc[1], False, 1, self.color])
+					        else:
+						        self.picload.setPara([IMAGE_SIZE_XXS, IMAGE_SIZE_XXS, sc[0], sc[1], False, 1, self.color])
 						
-					self["thumb" + str(self.Thumbnaillist[x][1])].show()
+					        self["thumb" + str(self.Thumbnaillist[x][1])].show()
 
-			elif self.Thumbnaillist[x][0] == 2:
-				if cnt == 6:
-					self["label"].setText(self.Thumbnaillist[3][3])
-					writeToVFD(self.Thumbnaillist[3][3])
-					self.isWorking = False
+			        elif self.Thumbnaillist[x][0] == 2:
+				        if cnt == 6:
+					        self["label"].setText(self.Thumbnaillist[3][3])
+					        writeToVFD(self.Thumbnaillist[3][3])
+					        self.isWorking = False
+
+                        except:
+                                message = _("EtPortal:\n\nPlease select at least 7 Extensions in (EtPortal Setup)")
+                                self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 30)
 
     def keyPageDown(self):
         if self.isWorking:
