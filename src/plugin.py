@@ -28,7 +28,7 @@ from Components.PluginList import *
 from Components.Pixmap import MovingPixmap
 from __init__ import _
 
-EtPortalVersion = '3.6'
+EtPortalVersion = '3.7'
 SHARED_DIR_PATH = '/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/pics/'
 
 IMAGE_SIZE = 128
@@ -49,30 +49,22 @@ config.plugins.EtPortal.rememberposition = ConfigYesNo(default=True)
 config.plugins.EtPortal.showtimericon = ConfigBoolean(default=True)
 config.plugins.EtPortal.enablemarkbutton = ConfigYesNo(default=True)
 config.plugins.EtPortal.vfd = ConfigYesNo(default=True)
-config.plugins.EtPortal.adult = ConfigPassword(default='', visible_width=50, fixed_size=False)
+#config.plugins.EtPortal.adult = ConfigPassword(default='', visible_width=50, fixed_size=False)
 config.plugins.EtPortal.Get = ConfigYesNo(default=False)
 config.plugins.EtPortal.movie = ConfigYesNo(default=True)
 config.plugins.EtPortal.emc = ConfigYesNo(default=False)
 config.plugins.EtPortal.dvd = ConfigYesNo(default=False)
 config.plugins.EtPortal.media = ConfigYesNo(default=False)
 config.plugins.EtPortal.picture = ConfigYesNo(default=True)
-config.plugins.EtPortal.mytube = ConfigYesNo(default=False)
 config.plugins.EtPortal.iptv = ConfigYesNo(default=True)
-config.plugins.EtPortal.webmedia = ConfigYesNo(default=False)
-config.plugins.EtPortal.weather = ConfigYesNo(default=False)
-config.plugins.EtPortal.wetter = ConfigYesNo(default=False)
 config.plugins.EtPortal.weblinks = ConfigYesNo(default=True)
 config.plugins.EtPortal.merlinmusic = ConfigYesNo(default=False)
 config.plugins.EtPortal.foreca = ConfigYesNo(default=False)
-config.plugins.EtPortal.onechannel = ConfigYesNo(default=False)
-config.plugins.EtPortal.putpat = ConfigYesNo(default=False)
-config.plugins.EtPortal.myvideo = ConfigYesNo(default=False)
 config.plugins.EtPortal.tvspielfilm = ConfigYesNo(default=False)
 config.plugins.EtPortal.extensions = ConfigYesNo(default=True)
 config.plugins.EtPortal.pluginbrowser = ConfigYesNo(default=True)
 config.plugins.EtPortal.shutdown = ConfigYesNo(default=True)
 config.plugins.EtPortal.systeminfo = ConfigYesNo(default=True)
-config.plugins.EtPortal.myentertainment = ConfigYesNo(default=False)
 config.plugins.EtPortal.dreamexplorer = ConfigYesNo(default=True)
 config.plugins.EtPortal.dreamplex = ConfigYesNo(default=False)
 config.plugins.EtPortal.digitalfernsehen = ConfigYesNo(default=True)
@@ -87,7 +79,6 @@ config.plugins.EtPortal.wiki = ConfigYesNo(default=True)
 config.plugins.EtPortal.kicker = ConfigYesNo(default=False)
 config.plugins.EtPortal.kickerticker = ConfigYesNo(default=False)
 config.plugins.EtPortal.verkehrsinfo = ConfigYesNo(default=True)
-config.plugins.EtPortal.cubicstreamer = ConfigYesNo(default=False)
 config.plugins.EtPortal.turkvod = ConfigYesNo(default=False)
 config.plugins.EtPortal.greekstreamtv = ConfigYesNo(default=False)
 config.plugins.EtPortal.mediaportal = ConfigYesNo(default=True)
@@ -100,20 +91,18 @@ config.plugins.EtPortal.muzutv = ConfigYesNo(default=True)
 config.plugins.EtPortal.facebook = ConfigYesNo(default=True)
 config.plugins.EtPortal.ardhbbtv = ConfigYesNo(default=True)
 config.plugins.EtPortal.skyrecorder = ConfigYesNo(default=True)
-config.plugins.EtPortal.myvideoplus = ConfigYesNo(default=True)
-config.plugins.EtPortal.youtubeplus = ConfigYesNo(default=True)
-config.plugins.EtPortal.ondemand = ConfigYesNo(default=True)
+config.plugins.EtPortal.atvreader = ConfigYesNo(default=True)
+config.plugins.EtPortal.tstube = ConfigYesNo(default=True)
+config.plugins.EtPortal.kodi = ConfigYesNo(default=True)
 config.plugins.EtPortal.mp3browser = ConfigYesNo(default=True)
 config.plugins.EtPortal.moviebrowser = ConfigYesNo(default=True)
 config.plugins.EtPortal.pvmc = ConfigYesNo(default=True)
 config.plugins.EtPortal.webradiofs = ConfigYesNo(default=True)
 config.plugins.EtPortal.powertimer = ConfigYesNo(default=True)
-config.plugins.EtPortal.xbmcwetter = ConfigYesNo(default=True)
 config.plugins.EtPortal.tvcharts = ConfigYesNo(default=False)
 config.plugins.EtPortal.mediainfo = ConfigYesNo(default=True)
 config.plugins.EtPortal.downloadcenter = ConfigYesNo(default=True)
 config.plugins.EtPortal.fragmutti = ConfigYesNo(default=True)
-config.plugins.EtPortal.xbmcaddons = ConfigYesNo(default=True)
 config.plugins.EtPortal.moviearchiver = ConfigYesNo(default=True)
 config.plugins.EtPortal.tanken = ConfigYesNo(default=True)
 config.plugins.EtPortal.wikitv = ConfigYesNo(default=True)
@@ -175,16 +164,8 @@ class EtPortalScreen(Screen):
             piclist.append(('picture_player.png', _('Picture Player')))
         if fileExists('/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/NetworkBrowser.pyo') and config.plugins.EtPortal.networkbrowser.value:
             piclist.append(('network.png', _('Network Browser')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MyTube/plugin.pyo') and config.plugins.EtPortal.mytube.value:
-            piclist.append(('mytube.png', _('My TubePlayer')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/IPTV-List-Updater/plugin.pyo') and config.plugins.EtPortal.iptv.value:
             piclist.append(('iptv.png', _('IPTV-List Updater')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebMedia/') and config.plugins.EtPortal.webmedia.value:
-            piclist.append(('webmedia.png', _('WebMedia')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/putpattv/plugin.pyo') and config.plugins.EtPortal.putpat.value:
-            piclist.append(('putpat.png', _('putpat.tv')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/chartsplayer/plugin.pyo') and config.plugins.EtPortal.myvideo.value:
-            piclist.append(('myvideo.png', _('MyVideo - Top 100')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TVSpielfilm/plugin.pyo') and config.plugins.EtPortal.tvspielfilm.value:
             piclist.append(('tvspielfilm.png', _('TV Spielfilm')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') and config.plugins.EtPortal.operabrowser.value or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.operabrowser.value:
@@ -195,28 +176,14 @@ class EtPortalScreen(Screen):
             piclist.append(('hbbig.png', _('HBBig')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') and config.plugins.EtPortal.watchmi.value or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo') and config.plugins.EtPortal.watchmi.value:
             piclist.append(('watchmi.png', _('Themenkan\xc3\xa4le')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/msnWetter/plugin.pyo') and config.plugins.EtPortal.weather.value:
-            piclist.append(('wetter.png', _('msn-Wetter')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WeatherPlugin/plugin.pyo') and config.plugins.EtPortal.wetter.value:
-            piclist.append(('msnweather.png', _('Wetter')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Weblinks/plugin.pyo') and config.plugins.EtPortal.weblinks.value:
             piclist.append(('weblinks.png', _('Weblinks plugin')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/pornkiste/plugin.pyo') and config.plugins.EtPortal.adult.value:
-            piclist.append(('pornkiste.png', _('PornKiste 18+')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/YouPorn/plugin.pyo') and config.plugins.EtPortal.adult.value:
-            piclist.append(('youporn.png', _('youporn 18+')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/ePorner/plugin.pyo') and config.plugins.EtPortal.adult.value:
-            piclist.append(('eporner.png', _('ePorner 18+')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MerlinMusicPlayer/plugin.pyo') and config.plugins.EtPortal.merlinmusic.value:
             piclist.append(('merlinmusic.png', _('Merlin Music Player')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/DIGITALfernsehen/plugin.pyo') and config.plugins.EtPortal.digitalfernsehen.value:
             piclist.append(('digitalfernsehen.png', _('DiGITAL fernsehen')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Foreca/plugin.pyo') and config.plugins.EtPortal.foreca.value:
             piclist.append(('foreca.png', _('Foreca Weather')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/1channel/plugin.pyo') and config.plugins.EtPortal.onechannel.value:
-            piclist.append(('1channel.png', _('1channel')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/PremiumEntertain/plugin.pyo') and config.plugins.EtPortal.myentertainment.value:
-            piclist.append(('my-entertainment.png', _('My-Entertainment Premium')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Chefkoch/plugin.pyo') and config.plugins.EtPortal.Chefkoch.value:
             piclist.append(('chefkoch.png', _('Chefkoch')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Blu-ray/plugin.pyo') and config.plugins.EtPortal.bluray.value:
@@ -243,8 +210,6 @@ class EtPortalScreen(Screen):
             piclist.append(('verkehrsinfo.png', _('Verkehrsinfo.de')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Facebook/plugin.pyo') and config.plugins.EtPortal.facebook.value:
             piclist.append(('facebook.png', _('Facebook')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/CuBiCStreamer/plugin.pyo') and config.plugins.EtPortal.cubicstreamer.value:
-            piclist.append(('cubic.png', _('Cubic Streamer')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TURKvod/plugin.pyo') and config.plugins.EtPortal.turkvod.value:
             piclist.append(('turkvod.png', _('TURKvod IPTV')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/GreekStreamTV/plugin.pyo') and config.plugins.EtPortal.greekstreamtv.value:
@@ -263,12 +228,6 @@ class EtPortalScreen(Screen):
             piclist.append(('ardhbbtv.png', _('ARD HbbTV-Portal')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/skyrecorder/plugin.pyo') and config.plugins.EtPortal.skyrecorder.value:
             piclist.append(('skyrecorder.png', _('sky recorder')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MyvideoPlus/plugin.pyo') and config.plugins.EtPortal.myvideoplus.value:
-            piclist.append(('myvideoplus.png', _('MyVideo - Plus')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/YoutubePlus/plugin.pyo') and config.plugins.EtPortal.youtubeplus.value:
-            piclist.append(('youtubeplus.png', _('YouTube - Plus')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OnDemand/plugin.pyo') and config.plugins.EtPortal.ondemand.value:
-            piclist.append(('ondemand.png', _('On Demand')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MP3Browser/plugin.pyo') and config.plugins.EtPortal.mp3browser.value:
             piclist.append(('mp3browser.png', _('mp3-Browser')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MovieBrowser/plugin.pyo') and config.plugins.EtPortal.moviebrowser.value:
@@ -289,8 +248,6 @@ class EtPortalScreen(Screen):
             piclist.append(('shutdown.png', _('Sleeptimer and power control')))
         if fileExists('/usr/lib/enigma2/python/Screens/PowerTimerEdit.pyo') and config.plugins.EtPortal.powertimer.value:
             piclist.append(('powertimer.png', _('Power Timer')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/xbmcWetter/plugin.pyo') and config.plugins.EtPortal.xbmcwetter.value:
-            piclist.append(('xbmcweather.png', _('xbmc Wetter')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TVCharts/plugin.pyo') and config.plugins.EtPortal.tvcharts.value:
             piclist.append(('tvcharts.png', _('TV Charts')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/mediainfo/plugin.pyo') and config.plugins.EtPortal.mediainfo.value:
@@ -299,12 +256,16 @@ class EtPortalScreen(Screen):
             piclist.append(('downloadcenter.png', _('DownloadCenter')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/FragMutti/plugin.pyo') and config.plugins.EtPortal.fragmutti.value:
             piclist.append(('fragmutti.png', _('Frag - Mutti')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/XBMCAddons/plugin.pyo') and config.plugins.EtPortal.xbmcaddons.value:
-            piclist.append(('xbmcaddons.png', _('xbmc - addons')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/KodiDirect/plugin.pyo') and config.plugins.EtPortal.kodi.value:
+            piclist.append(('kodi.png', _('KODI Direct')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MovieArchiver/plugin.pyo') and config.plugins.EtPortal.moviearchiver.value:
             piclist.append(('moviearchiver.png', _('Movie Archiver')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/YahooWeather/plugin.pyo') and config.plugins.EtPortal.yahooweather.value:
             piclist.append(('yahooweather.png', _('Yahoo Weather')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TSTube/plugin.pyo') and config.plugins.EtPortal.tstube.value:
+            piclist.append(('youtube.png', _('TS Tube')))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/openATVreader/plugin.pyo') and config.plugins.EtPortal.atvreader.value:
+            piclist.append(('atvreader.png', _('OpenATV Forum Reader ')))
 			
         posX = 0
         hOffset = BORDER_OFFSET_SIZE
@@ -609,14 +570,6 @@ class EtPortalScreen(Screen):
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MediaPlayer/plugin.pyo'):
                 from Plugins.Extensions.MediaPlayer.plugin import MediaPlayer
                 self.session.open(MediaPlayer)
-        elif 'wetter.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/msnWetter/plugin.pyo'):
-                from Plugins.Extensions.msnWetter.plugin import *
-                self.session.open(colorCheck)
-        elif 'msnweather.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WeatherPlugin/plugin.pyo'):
-                from Plugins.Extensions.WeatherPlugin.plugin import MSNWeatherPlugin
-                self.session.open(MSNWeatherPlugin)
         elif 'dvd_player.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/DVDPlayer/keymap.xml'):
                 from Plugins.Extensions.DVDPlayer.plugin import DVDPlayer
@@ -624,13 +577,13 @@ class EtPortalScreen(Screen):
             if not fileExists('/usr/lib/enigma2/python/Plugins/Extensions/DVDPlayer/keymap.xml') and fileExists('/usr/lib/enigma2/python/Screens/DVD.pyo'):
                 from Screens import DVD
                 self.session.open(DVD.DVDPlayer)
-        elif 'webmedia.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebMedia/'):
-                from Plugins.Extensions.WebMedia.plugin import *
+        elif 'kodi.png' in self.Thumbnaillist[3][2]:
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/KodiDirect/'):
+                from Plugins.Extensions.KodiDirect.plugin import *
                 from Components.PluginComponent import plugins
-                plugin = _('WebMedia')
+                plugin = _('KodiDirect')
                 for p in plugins.getPlugins(where=[PluginDescriptor.WHERE_EXTENSIONSMENU, PluginDescriptor.WHERE_PLUGINMENU]):
-                    if 'WebMedia' == str(p.name):
+                    if 'KodiDirect' == str(p.name):
                         plugin = p
                 if plugin is not None:
                     plugin(session=self.session)
@@ -653,33 +606,32 @@ class EtPortalScreen(Screen):
                 from Plugins.SystemPlugins.NetworkBrowser.plugin import *
                 iface = None
                 self.session.open(NetworkBrowser, iface, plugin_path)
-        elif 'mytube.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MyTube/plugin.pyo'):
-                from Plugins.Extensions.MyTube.plugin import *
-                l2key = True
-                self.session.open(MyTubePlayerMainScreen, l2key)
+        elif 'youtube.png' in self.Thumbnaillist[3][2]:
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TSTube/plugin.pyo'):
+                from Screens.PluginBrowser import PluginBrowser
+                from Plugins.Plugin import PluginDescriptor
+                from Components.PluginList import *
+                from Components.PluginComponent import plugins
+                pluginlist = []
+                pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
+                for plugin in pluginlist:
+                    if 'TSTube' in str(plugin.name):
+                        break
+                plugin(session=self.session)
+        elif 'atvreader.png' in self.Thumbnaillist[3][2]:
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/openATVreader/plugin.pyo'):
+                from Plugins.Extensions.openATVreader.plugin import *
+                self.session.open(openatv.OPENA_TV_HauptScreen)
         elif 'iptv.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/IPTV-List-Updater/plugin.pyo'):
                 _temp = __import__('Plugins.Extensions.IPTV-List-Updater.plugin', globals(), locals(), ['Start'], -1)
                 Start = _temp.Start
                 self.session.open(Start)
-        elif 'putpat.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/putpattv/plugin.pyo'):
-                from Plugins.Extensions.putpattv.plugin import *
-                self.session.openWithCallback(closen, putpat, False, start_point_now, plugin_path)
         elif 'tanken.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/clever-tanken/plugin.pyo'):
                 _temp = __import__('Plugins.Extensions.clever-tanken.plugin', globals(), locals(), ['clevertankenMain'], -1)
                 clevertankenMain = _temp.clevertankenMain
                 self.session.open(clevertankenMain)
-        elif 'myvideo.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/chartsplayer/plugin.pyo'):
-                from Plugins.Extensions.chartsplayer.plugin import *
-                self.session.open(chartsplayer, plugin_path)
-        elif 'kinokiste.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/kinokiste/plugin.pyo'):
-                from Plugins.Extensions.kinokiste.plugin import *
-                self.session.open(kinokiste, plugin_path)
         elif 'tvspielfilm.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TVSpielfilm/plugin.pyo'):
                 from Plugins.Extensions.TVSpielfilm.plugin import *
@@ -708,61 +660,18 @@ class EtPortalScreen(Screen):
                         plugin = p
                 if plugin is not None:
                     plugin(session=self.session)
-        elif '1channel.png' in self.Thumbnaillist[3][2]:
-            if config.plugins.EtPortal.onechannel.value:
-                _temp = __import__('Plugins.Extensions.1channel.plugin', globals(), locals(), ['MyMenux'], -1)
-                action = 'start'
-                value = 0
-                MyMenux = _temp.MyMenux
-                self.session.open(MyMenux, action, value)
-        elif 'pornkiste.png' in self.Thumbnaillist[3][2]:
-            password = '/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/adultpassword'
-            if fileExists(password):
-                c = open(password, 'r')
-                for line in c:
-                    self.passw = line
-                c.close()
-            if config.plugins.EtPortal.adult.value == self.passw:
-                from Plugins.Extensions.pornkiste.plugin import *
-                self.session.open(pornkiste, plugin_path)
-            else:
-                self.session.open(MessageBox, _('Falsches Passwort!\n\nwrong password!'), MessageBox.TYPE_INFO, timeout=8)
-        elif 'eporner.png' in self.Thumbnaillist[3][2]:
-            password = '/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/adultpassword'
-            if fileExists(password):
-                c = open(password, 'r')
-                for line in c:
-                    self.passw = line
-                c.close()
-            if config.plugins.EtPortal.adult.value == self.passw:
-                from Plugins.Extensions.ePorner.plugin import *
-                self.session.open(eporner, plugin_path)
-            else:
-                self.session.open(MessageBox, _('Falsches Passwort!\n\nwrong password!'), MessageBox.TYPE_INFO, timeout=8)
-        elif 'youporn.png' in self.Thumbnaillist[3][2]:
-            password = '/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/adultpassword'
-            if fileExists(password):
-                c = open(password, 'r')
-                for line in c:
-                    self.passw = line
-                c.close()
-            if config.plugins.EtPortal.adult.value == self.passw:
-                from Plugins.Extensions.YouPorn.plugin import *
-                self.session.open(youpornMain, True)
-            else:
-                self.session.open(MessageBox, _('wrong password!'), MessageBox.TYPE_INFO, timeout=8)
-        elif 'my-entertainment.png' in self.Thumbnaillist[3][2]:
-            if config.plugins.EtPortal.myentertainment.value:
-                from Screens.PluginBrowser import PluginBrowser
-                from Plugins.Plugin import PluginDescriptor
-                from Components.PluginList import *
-                from Components.PluginComponent import plugins
-                pluginlist = []
-                pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
-                for plugin in pluginlist:
-                    if 'MyPremiumEntertain' in str(plugin.name):
-                        break
-                plugin(session=self.session)
+        #elif 'youporn.png' in self.Thumbnaillist[3][2]:
+        #    password = '/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/adultpassword'
+        #    if fileExists(password):
+        #        c = open(password, 'r')
+        #        for line in c:
+        #            self.passw = line
+        #        c.close()
+        #    if config.plugins.EtPortal.adult.value == self.passw:
+        #        from Plugins.Extensions.YouPorn.plugin import *
+        #        self.session.open(youpornMain, True)
+        #    else:
+        #        self.session.open(MessageBox, _('wrong password!'), MessageBox.TYPE_INFO, timeout=8)
         elif 'digitalfernsehen.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.digitalfernsehen.value:
                 from Plugins.Extensions.DIGITALfernsehen.plugin import *
@@ -823,22 +732,6 @@ class EtPortalScreen(Screen):
             if config.plugins.EtPortal.facebook.value:
                 from Plugins.Extensions.Facebook.plugin import *
                 self.session.open(loginCheck)
-        elif 'cubic.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/CuBiCStreamer/plugin.pyo'):
-                from Plugins.Extensions.CuBiCStreamer.plugin import *
-                self.session.open(MainWindow)
-        elif 'ondemand.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OnDemand/plugin.pyo'):
-                from Screens.PluginBrowser import PluginBrowser
-                from Plugins.Plugin import PluginDescriptor
-                from Components.PluginList import *
-                from Components.PluginComponent import plugins
-                pluginlist = []
-                pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
-                for plugin in pluginlist:
-                    if 'OnDemand' in str(plugin.name):
-                        break
-                plugin(session=self.session)
         elif 'mediaportal.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MediaPortal/plugin.pyo'):
                 from Screens.PluginBrowser import PluginBrowser
@@ -994,30 +887,6 @@ class EtPortalScreen(Screen):
                     if 'GreekStreamTV' in str(plugin.name):
                         break
                 plugin(session=self.session)
-        elif 'myvideoplus.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MyvideoPlus/plugin.pyo'):
-                from Screens.PluginBrowser import PluginBrowser
-                from Plugins.Plugin import PluginDescriptor
-                from Components.PluginList import *
-                from Components.PluginComponent import plugins
-                pluginlist = []
-                pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
-                for plugin in pluginlist:
-                    if 'MyvideoPlus' in str(plugin.name):
-                        break
-                plugin(session=self.session)
-        elif 'youtubeplus.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/YoutubePlus/plugin.pyo'):
-                from Screens.PluginBrowser import PluginBrowser
-                from Plugins.Plugin import PluginDescriptor
-                from Components.PluginList import *
-                from Components.PluginComponent import plugins
-                pluginlist = []
-                pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
-                for plugin in pluginlist:
-                    if 'YoutubePlus' in str(plugin.name):
-                        break
-                plugin(session=self.session)
         elif 'opera.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo'):
                 from Plugins.Extensions.OpenOpera.plugin import *
@@ -1042,16 +911,6 @@ class EtPortalScreen(Screen):
                 import xml.etree.cElementTree
                 menu = xml.etree.cElementTree.parse(SHARED_DIR_PATH + 'powertimer.xml').getroot()
                 self.session.open(MainMenu, menu)
-        elif 'xbmcweather.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/xbmcWetter/plugin.pyo'):                
-                from Plugins.Extensions.xbmcWetter.plugin import *
-                from Components.PluginComponent import plugins
-                plugin = _('xbmc Wetter')
-                for p in plugins.getPlugins(where=[PluginDescriptor.WHERE_EXTENSIONSMENU, PluginDescriptor.WHERE_PLUGINMENU]):
-                    if 'xbmc Wetter' == str(p.name):
-                        plugin = p
-                if plugin is not None:
-                    plugin(session=self.session)
         elif 'mediainfo.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/mediainfo/plugin.pyo'):
                 from Screens.PluginBrowser import PluginBrowser
@@ -1086,18 +945,6 @@ class EtPortalScreen(Screen):
                 pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
                 for plugin in pluginlist:
                     if 'Frag Mutti' in str(plugin.name):
-                        break
-                plugin(session=self.session)
-        elif 'xbmcaddons.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/XBMCAddons/plugin.pyo'):
-                from Screens.PluginBrowser import PluginBrowser
-                from Plugins.Plugin import PluginDescriptor
-                from Components.PluginList import *
-                from Components.PluginComponent import plugins
-                pluginlist = []
-                pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
-                for plugin in pluginlist:
-                    if 'XBMCAddons' in str(plugin.name):
                         break
                 plugin(session=self.session)
         elif 'moviearchiver.png' in self.Thumbnaillist[3][2]:
@@ -1193,14 +1040,11 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
         self.list.append(getConfigListEntry(_(' '), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_('Show following Plugins/Extensions:'), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_(' '), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/pornkiste/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/ePorner/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/beeg/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/YouPorn/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('Adult-Content 18+'), config.plugins.EtPortal.adult))
+        
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/openATVreader/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('OpenATV Forum Reader'), config.plugins.EtPortal.atvreader))
         else:
-            self.list.append(getConfigListEntry(_('Adult-Content 18+'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/1channel/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('1channel'), config.plugins.EtPortal.onechannel))
-        else:
-            self.list.append(getConfigListEntry(_('1channel'), config.plugins.EtPortal.none))
+            self.list.append(getConfigListEntry(_('OpenATV Forum Reader'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
             self.list.append(getConfigListEntry(_('ARD HbbTV-Portal'), config.plugins.EtPortal.ardhbbtv))
         else:
@@ -1223,10 +1067,6 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('clever-tanken.de'), config.plugins.EtPortal.tanken))
         else:
             self.list.append(getConfigListEntry(_('clever-tanken.de'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/CuBiCStreamer/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('CuBiC Streamer'), config.plugins.EtPortal.cubicstreamer))
-        else:
-            self.list.append(getConfigListEntry(_('CuBiC Streamer'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/DIGITALfernsehen/plugin.pyo'):
             self.list.append(getConfigListEntry(_('DiGITAL fernsehen'), config.plugins.EtPortal.digitalfernsehen))
         else:
@@ -1292,10 +1132,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('Kino.de'), config.plugins.EtPortal.kinode))
         else:
             self.list.append(getConfigListEntry(_('Kino.de'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/kinokiste/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('KinoKiste'), config.plugins.EtPortal.kinokiste))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/KodiDirect/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('KODI Direct'), config.plugins.EtPortal.kodi))
         else:
-            self.list.append(getConfigListEntry(_('KinoKiste'), config.plugins.EtPortal.none))
+            self.list.append(getConfigListEntry(_('KODI Direct'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/mediainfo/plugin.pyo'):
             self.list.append(getConfigListEntry(_('MediaInfo'), config.plugins.EtPortal.mediainfo))
         else:
@@ -1322,38 +1162,14 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('mp3-Browser'), config.plugins.EtPortal.mp3browser))
         else:
             self.list.append(getConfigListEntry(_('mp3-Browser'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/msnWetter/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('MSN-Weather'), config.plugins.EtPortal.weather))
-        else:
-            self.list.append(getConfigListEntry(_('MSN-Weather'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MUZUtv/plugin.pyo'):
             self.list.append(getConfigListEntry(_('MUZU.TV'), config.plugins.EtPortal.muzutv))
         else:
             self.list.append(getConfigListEntry(_('MUZU.TV'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/PremiumEntertain/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('My-Entertainment Premium'), config.plugins.EtPortal.myentertainment))
-        else:
-            self.list.append(getConfigListEntry(_('My-Entertainment Premium'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MyTube/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('MyTube'), config.plugins.EtPortal.mytube))
-        else:
-            self.list.append(getConfigListEntry(_('MyTube'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/chartsplayer/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('MyVideo - Top 100'), config.plugins.EtPortal.myvideo))
-        else:
-            self.list.append(getConfigListEntry(_('MyVideo - Top 100'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MyvideoPlus/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('MyVideo - Plus'), config.plugins.EtPortal.myvideoplus))
-        else:
-            self.list.append(getConfigListEntry(_('MyVideo - Plus'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/plugin.pyo'):
             self.list.append(getConfigListEntry(_('Network Browser'), config.plugins.EtPortal.networkbrowser))
         else:
             self.list.append(getConfigListEntry(_('Network Browser'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OnDemand/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('On Demand'), config.plugins.EtPortal.ondemand))
-        else:
-            self.list.append(getConfigListEntry(_('On Demand'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
             self.list.append(getConfigListEntry(_('Opera'), config.plugins.EtPortal.operabrowser))
         else:
@@ -1365,10 +1181,6 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
         self.list.append(getConfigListEntry(_('Plugin Browser'), config.plugins.EtPortal.pluginbrowser))
         if fileExists('/usr/lib/enigma2/python/Screens/PowerTimerEdit.pyo'):
             self.list.append(getConfigListEntry(_('Power Timer'), config.plugins.EtPortal.powertimer))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/putpattv/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('putpat.tv'), config.plugins.EtPortal.putpat))
-        else:
-            self.list.append(getConfigListEntry(_('putpat.tv'), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_('Sleeptimer and power control'), config.plugins.EtPortal.shutdown))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/SHOUTcast/plugin.pyo'):
             self.list.append(getConfigListEntry(_('SHOUTcast'), config.plugins.EtPortal.shoutcast))
@@ -1384,6 +1196,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('Spiegel ONLINE'), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_('System Information'), config.plugins.EtPortal.systeminfo))
         self.list.append(getConfigListEntry(_('Timer Option'), config.plugins.EtPortal.showtimericon))
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TSTube/plugin.pyo'):
+            self.list.append(getConfigListEntry(_('TS Tube'), config.plugins.EtPortal.tstube))
+        else:
+            self.list.append(getConfigListEntry(_('TS Tube'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo') or fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
             self.list.append(getConfigListEntry(_('tunein Radio'), config.plugins.EtPortal.tunein))
         else:
@@ -1412,18 +1228,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('watchmi'), config.plugins.EtPortal.watchmi))
         else:
             self.list.append(getConfigListEntry(_('watchmi'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WeatherPlugin/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('Weather'), config.plugins.EtPortal.wetter))
-        else:
-            self.list.append(getConfigListEntry(_('Weather'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Weblinks/plugin.pyo'):
             self.list.append(getConfigListEntry(_('WebLinks'), config.plugins.EtPortal.weblinks))
         else:
             self.list.append(getConfigListEntry(_('Weblinks'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/WebMedia/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('WebMedia'), config.plugins.EtPortal.webmedia))
-        else:
-            self.list.append(getConfigListEntry(_('WebMedia'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/plugin.pyo'):
             self.list.append(getConfigListEntry(_('WebRadio FS'), config.plugins.EtPortal.webradiofs))
         else:
@@ -1436,14 +1244,10 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('Wiki TV'), config.plugins.EtPortal.wikitv))
         else:
             self.list.append(getConfigListEntry(_('Wiki TV'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/XBMCAddons/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('xbmc - addons'), config.plugins.EtPortal.xbmcaddons))
-        else:
-            self.list.append(getConfigListEntry(_('xbmc - addons'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/xbmcWetter/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('Xbmc Wetter'), config.plugins.EtPortal.xbmcwetter))
-        else:
-            self.list.append(getConfigListEntry(_('Xbmc Wetter'), config.plugins.EtPortal.none))
+        #if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/XBMCAddons/plugin.pyo'):
+        #    self.list.append(getConfigListEntry(_('xbmc - addons'), config.plugins.EtPortal.xbmcaddons))
+        #else:
+        #    self.list.append(getConfigListEntry(_('xbmc - addons'), config.plugins.EtPortal.none))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenXtaReader/plugin.pyo'):
             self.list.append(getConfigListEntry(_('OpenXTA Forum Reader'), config.plugins.EtPortal.xtrend))
         else:
@@ -1456,10 +1260,6 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('Yamp Music Player'), config.plugins.EtPortal.yamp))
         else:
             self.list.append(getConfigListEntry(_('Yamp Music Player'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/YoutubePlus/plugin.pyo'):
-            self.list.append(getConfigListEntry(_('Youtube - Plus'), config.plugins.EtPortal.youtubeplus))
-        else:
-            self.list.append(getConfigListEntry(_('Youtube - Plus'), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_(' '), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_('mod by: mogli123 / icewaere / pcd / koivo'), config.plugins.EtPortal.none))
         self.list.append(getConfigListEntry(_('thx to bla666'), config.plugins.EtPortal.none))
