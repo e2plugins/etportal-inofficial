@@ -416,7 +416,7 @@ class EtPortalScreen(Screen):
         self.updateTimer.callback.append(self.updateStatus)
         self.updateTimer.start(128)
         self.updateStatus()
-        self.newPage()
+        self.onLayoutFinish.append(self.newPage())
 
     def updateStatus(self):
         self.index0 = self.index0 + 1
