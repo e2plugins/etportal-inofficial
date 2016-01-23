@@ -112,7 +112,7 @@ config.plugins.EtPortal.yahooweather = ConfigYesNo(default=True)
 config.plugins.EtPortal.watchmi = ConfigYesNo(default=True)
 
 config.plugins.EtPortal.none = NoSave(ConfigNothing()) 
-config.plugins.EtPortal.color = ConfigSelection(default='SkinColor_HD', choices=[('ice_HD', _('ice_HD')), ('black_HD', _('black_HD')), ('Nobile_HD', _('Nobile_HD')), ('SkinColor_HD', _('SkinColor_HD')), ('Metrix_FullHD', _('Metrix_FullHD'))])
+config.plugins.EtPortal.color = ConfigSelection(default='SkinColor_HD', choices=[('ice_HD', _('ice_HD')), ('black_HD', _('black_HD')), ('Nobile_HD', _('Nobile_HD')), ('SkinColor_HD', _('SkinColor_HD')), ('Xion_HD', _('Xion_HD')), ('Xion_FullHD', _('Xion_FullHD')), ('Metrix_FullHD', _('Metrix_FullHD'))])
 
 
 def writeToVFD(txt):
@@ -326,7 +326,7 @@ class EtPortalScreen(Screen):
             self.skin += '<widget source="label" render="Label" position="0,148" size="e-0,40" halign="center" font="Regular;30" zPosition="2" backgroundColor="#00000000" transparent="1" noWrap="1" foregroundColor="' + self.textcolor + '" />'
             self.skin += '</screen>'
 		
-	elif config.plugins.EtPortal.color.value == 'Nobile_HD':
+        elif config.plugins.EtPortal.color.value == 'Nobile_HD':
             self.skin = '<screen position="0,0" size="1280,720" flags="wfNoBorder" backgroundColor="transparent" >'
             posX = 0
             self.skin += '<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/NobileSkin/bar.png" position="0,0" size="1280,720" zPosition="0" transparent="1" alphatest="on" />'
@@ -339,6 +339,36 @@ class EtPortalScreen(Screen):
             self.skin += '<widget name="thumb5" position="886,545" size="170,170" zPosition="5" alphatest="on" backgroundColor="#d4d4d4" transparent="1" />'
             self.skin += '<widget name="thumb6" position="1047,557" size="170,170" zPosition="5" alphatest="on" backgroundColor="#d4d4d4" transparent="1" />'
             self.skin += '<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/NobileSkin/sel.png" position="560,520" size="150,130" zPosition="9" transparent="1" alphatest="on" />'            
+            self.skin += '</screen>'
+
+        elif config.plugins.EtPortal.color.value == 'Xion_FullHD':
+            self.skin = '<screen position="0,0" size="1920,1080" flags="wfNoBorder" backgroundColor="transparent" >'
+            posX = 0
+            self.skin += '<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/Xion/barhd.png" position="0,820" size="1920,1080" zPosition="0" transparent="1" alphatest="on" />'
+            self.skin += '<widget source="label" render="Label" position="751,980" size="456,51" halign="center" font="Regular; 35" zPosition="2" backgroundColor="XionBackground" transparent="1" noWrap="1" foregroundColor="XionFont2" />'
+            self.skin += '<widget name="thumb0" position="420,879" size="128,128" zPosition="5" alphatest="on" backgroundColor="XionBackground" transparent="1" />'
+            self.skin += '<widget name="thumb1" position="585,859" size="128,128" zPosition="5" alphatest="on" backgroundColor="XionBackground" transparent="1" />'
+            self.skin += '<widget name="thumb2" position="750,840" size="128,128" zPosition="5" alphatest="on" backgroundColor="XionBackground" transparent="1" />'
+            self.skin += '<widget name="thumb3" position="913,827" size="128,128" zPosition="8" alphatest="on" backgroundColor="XionBackground" transparent="1" />'
+            self.skin += '<widget name="thumb4" position="1077,840" size="128,128" zPosition="5" alphatest="on" backgroundColor="XionBackground" transparent="1" />'
+            self.skin += '<widget name="thumb5" position="1242,859" size="128,128" zPosition="5" alphatest="on" backgroundColor="XionBackground" transparent="1" />'
+            self.skin += '<widget name="thumb6" position="1404,879" size="128,128" zPosition="5" alphatest="on" backgroundColor="XionBackground" transparent="1" />'
+            self.skin += '<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/Xion/sel.png" position="902,826" size="150,150" zPosition="9" transparent="1" alphatest="on" />'            
+            self.skin += '</screen>'
+
+        elif config.plugins.EtPortal.color.value == 'Xion_HD':
+            self.skin = '<screen position="0,0" size="1280,720" flags="wfNoBorder" backgroundColor="transparent" >'
+            posX = 0
+            self.skin += '<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/Xion/bar.png" position="0,520" size="1280,720" zPosition="0" transparent="1" alphatest="on" />'
+            self.skin += '<widget source="label" render="Label" position="455,678" size="360,40" halign="center" font="Regular; 25" zPosition="2" backgroundColor="XionBackground" transparent="1" noWrap="1" foregroundColor="XionFont2" />'
+            self.skin += '<widget name="thumb0" position="100,557" size="170,170" zPosition="5" alphatest="on" backgroundColor="XionBackground" transparent="1" />'
+            self.skin += '<widget name="thumb1" position="257,545" size="170,170" zPosition="5" alphatest="on" backgroundColor="XionBackground" transparent="1" />'
+            self.skin += '<widget name="thumb2" position="414,536" size="170,170" zPosition="5" alphatest="on" backgroundColor="XionBackground" transparent="1" />'
+            self.skin += '<widget name="thumb3" position="570,520" size="170,170" zPosition="8" alphatest="on" backgroundColor="XionBackground" transparent="1" />'
+            self.skin += '<widget name="thumb4" position="728,536" size="170,170" zPosition="5" alphatest="on" backgroundColor="XionBackground" transparent="1" />'
+            self.skin += '<widget name="thumb5" position="886,545" size="170,170" zPosition="5" alphatest="on" backgroundColor="XionBackground" transparent="1" />'
+            self.skin += '<widget name="thumb6" position="1047,557" size="170,170" zPosition="5" alphatest="on" backgroundColor="XionBackground" transparent="1" />'
+            self.skin += '<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/EtPortal/Xion/sel.png" position="560,520" size="150,130" zPosition="9" transparent="1" alphatest="on" />'            
             self.skin += '</screen>'
             
         elif config.plugins.EtPortal.color.value == 'Metrix_FullHD':
