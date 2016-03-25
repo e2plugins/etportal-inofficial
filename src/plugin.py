@@ -250,7 +250,7 @@ class EtPortalScreen(Screen):
             piclist.append(('powertimer.png', _('Power Timer')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TVCharts/plugin.pyo') and config.plugins.EtPortal.tvcharts.value:
             piclist.append(('tvcharts.png', _('TV Charts')))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/mediainfo/plugin.pyo') and config.plugins.EtPortal.mediainfo.value:
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MediaInfo/plugin.pyo') and config.plugins.EtPortal.mediainfo.value:
             piclist.append(('mediainfo.png', _('MediaInfo')))
         if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/downloadcenter/plugin.pyo') and config.plugins.EtPortal.downloadcenter.value:
             piclist.append(('downloadcenter.png', _('DownloadCenter')))
@@ -942,7 +942,7 @@ class EtPortalScreen(Screen):
                 menu = xml.etree.cElementTree.parse(SHARED_DIR_PATH + 'powertimer.xml').getroot()
                 self.session.open(MainMenu, menu)
         elif 'mediainfo.png' in self.Thumbnaillist[3][2]:
-            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/mediainfo/plugin.pyo'):
+            if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MediaInfo/plugin.pyo'):
                 from Screens.PluginBrowser import PluginBrowser
                 from Plugins.Plugin import PluginDescriptor
                 from Components.PluginList import *
@@ -1166,7 +1166,7 @@ class EtPortalSetupScreen(Screen, ConfigListScreen):
             self.list.append(getConfigListEntry(_('KODI Direct'), config.plugins.EtPortal.kodi))
         else:
             self.list.append(getConfigListEntry(_('KODI Direct'), config.plugins.EtPortal.none))
-        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/mediainfo/plugin.pyo'):
+        if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MediaInfo/plugin.pyo'):
             self.list.append(getConfigListEntry(_('MediaInfo'), config.plugins.EtPortal.mediainfo))
         else:
             self.list.append(getConfigListEntry(_('MediaInfo'), config.plugins.EtPortal.none))
