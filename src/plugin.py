@@ -494,46 +494,45 @@ class EtPortalScreen(Screen):
         self.showPic()
 
     def showPic(self, picInfo=""):
-		cnt = 0
-		for x in range(NUMBER_OF_PICTURES):
-			cnt += 1
-			try:
-			        if self.Thumbnaillist[x][0] == 0:
-				        if self.picload.getThumbnail(self.Thumbnaillist[x][2]) == 1:
-					        self.ThumbTimer.start(500, True)
-				        else:
-					        self.Thumbnaillist[x][0] = 1
-				        break
-			        elif self.Thumbnaillist[x][0] == 1:
-				        self.Thumbnaillist[x][0] = 2
-				        ptr = self.picload.getData()
-				        if ptr != None:
-					        self["thumb" + str(self.Thumbnaillist[x][1])].instance.setPixmap(ptr.__deref__())
-					        sc = AVSwitch().getFramebufferScale()
-					        tmp = self.Thumbnaillist[x][1] + 1
-					        if  tmp == 3:
-						        self.picload.setPara([IMAGE_SIZE, IMAGE_SIZE, sc[0], sc[1], False, 1, self.color])
-						
-					        elif tmp == 2 or tmp == 4:
-						        self.picload.setPara([IMAGE_SIZE_S, IMAGE_SIZE_S, sc[0], sc[1], False, 1, self.color])
-						
-					        elif tmp == 1 or tmp == 5:
-						        self.picload.setPara([IMAGE_SIZE_XS, IMAGE_SIZE_XS, sc[0], sc[1], False, 1, self.color])
-						
-					        else:
-						        self.picload.setPara([IMAGE_SIZE_XXS, IMAGE_SIZE_XXS, sc[0], sc[1], False, 1, self.color])
-						
-					        self["thumb" + str(self.Thumbnaillist[x][1])].show()
+        cnt = 0
+        for x in range(NUMBER_OF_PICTURES):
+            cnt += 1
+            try:
+                if self.Thumbnaillist[x][0] == 0:
+                    if self.picload.getThumbnail(self.Thumbnaillist[x][2]) == 1:
+                        self.ThumbTimer.start(500, True)
+                    else:
+                        self.Thumbnaillist[x][0] = 1
+                    break
+                elif self.Thumbnaillist[x][0] == 1:
+                    self.Thumbnaillist[x][0] = 2
+                    ptr = self.picload.getData()
+                    if ptr != None:
+                        self["thumb" + str(self.Thumbnaillist[x][1])].instance.setPixmap(ptr.__deref__())
+                        sc = AVSwitch().getFramebufferScale()
+                        tmp = self.Thumbnaillist[x][1] + 1
+                        if  tmp == 3:
+                            self.picload.setPara([IMAGE_SIZE, IMAGE_SIZE, sc[0], sc[1], False, 1, self.color])
+                    
+                        elif tmp == 2 or tmp == 4:
+                            self.picload.setPara([IMAGE_SIZE_S, IMAGE_SIZE_S, sc[0], sc[1], False, 1, self.color])
+                    
+                        elif tmp == 1 or tmp == 5:
+                            self.picload.setPara([IMAGE_SIZE_XS, IMAGE_SIZE_XS, sc[0], sc[1], False, 1, self.color])
+                    
+                        else:
+                            self.picload.setPara([IMAGE_SIZE_XXS, IMAGE_SIZE_XXS, sc[0], sc[1], False, 1, self.color])
+                    
+                        self["thumb" + str(self.Thumbnaillist[x][1])].show()
 
-			        elif self.Thumbnaillist[x][0] == 2:
-				        if cnt == 6:
-					        self["label"].setText(self.Thumbnaillist[3][3])
-					        writeToVFD(self.Thumbnaillist[3][3])
-					        self.isWorking = False
-
-                        except:
-                                message = _("EtPortal:\n\nPlease select at least 7 Extensions in (EtPortal Setup)")
-                                self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 30)
+                elif self.Thumbnaillist[x][0] == 2:
+                    if cnt == 6:
+                        self["label"].setText(self.Thumbnaillist[3][3])
+                        writeToVFD(self.Thumbnaillist[3][3])
+                        self.isWorking = False
+            except:
+                    message = _("EtPortal:\n\nPlease select at least 7 Extensions in (EtPortal Setup)")
+                    self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 30)
 
     def keyPageDown(self):
         if self.isWorking:
@@ -590,7 +589,7 @@ class EtPortalScreen(Screen):
                 self.session.open(MainMenu, menu)
         elif 'dreamexplorer.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/DreamExplorer/plugin.pyo'):
-                from Plugins.Extensions.DreamExplorer.plugin import *
+                from Plugins.Extensions.DreamExplorer.plugin import DreamExplorerII
                 self.session.open(DreamExplorerII)
         elif 'movie_player.png' in self.Thumbnaillist[3][2]:
             from Screens.InfoBar import InfoBar
@@ -609,7 +608,7 @@ class EtPortalScreen(Screen):
                 self.session.open(DVD.DVDPlayer)
         elif 'kodi.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/KodiDirect/'):
-                from Plugins.Extensions.KodiDirect.plugin import *
+                # from Plugins.Extensions.KodiDirect.plugin import *
                 from Components.PluginComponent import plugins
                 plugin = _('KodiDirect')
                 for p in plugins.getPlugins(where=[PluginDescriptor.WHERE_EXTENSIONSMENU, PluginDescriptor.WHERE_PLUGINMENU]):
@@ -619,12 +618,12 @@ class EtPortalScreen(Screen):
                     plugin(session=self.session)
         elif 'dreamplex.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.dreamplex.value:
-                from Plugins.Extensions.DreamPlex.plugin import *
+                from Plugins.Extensions.DreamPlex.plugin import DPS_MainMenu
                 from Components.PluginComponent import plugins
                 self.session.open(DPS_MainMenu)
         elif 'emc.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.emc.value:
-                from Plugins.Extensions.EnhancedMovieCenter.plugin import *
+                from Plugins.Extensions.EnhancedMovieCenter.plugin import showMoviesNew
                 from Components.PluginComponent import plugins
                 showMoviesNew()
         elif 'picture_player.png' in self.Thumbnaillist[3][2]:
@@ -633,14 +632,14 @@ class EtPortalScreen(Screen):
                 self.session.open(picshow)
         elif 'network.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/SystemPlugins/NetworkBrowser/NetworkBrowser.pyo'):
-                from Plugins.SystemPlugins.NetworkBrowser.plugin import *
+                from Plugins.SystemPlugins.NetworkBrowser.plugin import NetworkBrowser
                 iface = None
                 self.session.open(NetworkBrowser, iface, plugin_path)
         elif 'youtube.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TSTube/plugin.pyo'):
                 from Screens.PluginBrowser import PluginBrowser
                 from Plugins.Plugin import PluginDescriptor
-                from Components.PluginList import *
+                #from Components.PluginList import *
                 from Components.PluginComponent import plugins
                 pluginlist = []
                 pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
@@ -650,7 +649,7 @@ class EtPortalScreen(Screen):
                 plugin(session=self.session)
         elif 'atvreader.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/openATVreader/plugin.pyo'):
-                from Plugins.Extensions.openATVreader.plugin import *
+                from Plugins.Extensions.openATVreader.plugin import openatv
                 self.session.open(openatv.OPENA_TV_HauptScreen)
         elif 'iptv.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/IPTV-List-Updater/plugin.pyo'):
@@ -664,25 +663,24 @@ class EtPortalScreen(Screen):
                 self.session.open(clevertankenMain)
         elif 'tvspielfilm.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TVSpielfilm/plugin.pyo'):
-                from Plugins.Extensions.TVSpielfilm.plugin import *
                 from Plugins.Extensions.TVSpielfilm.plugin import tvMain
                 self.session.open(tvMain)
         elif 'chefkoch.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Chefkoch/plugin.pyo'):
-                from Plugins.Extensions.Chefkoch.plugin import *
+                from Plugins.Extensions.Chefkoch.plugin import ChefkochMain
                 self.session.open(ChefkochMain)
         elif 'xtrend.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenXtaReader/plugin.pyo'):
-                from Plugins.Extensions.OpenXtaReader.plugin import *
+                from Plugins.Extensions.OpenXtaReader.plugin import OpenXtaMain
                 self.session.open(OpenXtaMain)
         elif 'merlinmusic.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.merlinmusic.value:
-                from Plugins.Extensions.MerlinMusicPlayer.plugin import *
+                from Plugins.Extensions.MerlinMusicPlayer.plugin import MerlinMusicPlayerFileList
                 servicelist = None
                 self.session.open(MerlinMusicPlayerFileList, servicelist)
         elif 'foreca.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/Foreca/plugin.pyo'):
-                from Plugins.Extensions.Foreca.plugin import *
+                #from Plugins.Extensions.Foreca.plugin import *
                 from Components.PluginComponent import plugins
                 plugin = _("Foreca Wettervorhersage")
                 for p in plugins.getPlugins(where=[PluginDescriptor.WHERE_EXTENSIONSMENU, PluginDescriptor.WHERE_PLUGINMENU]):
@@ -704,7 +702,7 @@ class EtPortalScreen(Screen):
         #        self.session.open(MessageBox, _('wrong password!'), MessageBox.TYPE_INFO, timeout=8)
         elif 'digitalfernsehen.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.digitalfernsehen.value:
-                from Plugins.Extensions.DIGITALfernsehen.plugin import *
+                from Plugins.Extensions.DIGITALfernsehen.plugin import digitalTVMain
                 self.session.open(digitalTVMain)
         elif 'bluray.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.bluray.value:
@@ -722,51 +720,49 @@ class EtPortalScreen(Screen):
                     self.session.open(blurayMainCoverFull)
         elif 'bild.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.bild.value:
-                from Plugins.Extensions.BILDOnline.plugin import *
+                from Plugins.Extensions.BILDOnline.plugin import bildMain
                 self.session.open(bildMain)
         elif 'kino.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.kinode.value:
-                from Plugins.Extensions.KINOde.plugin import *
+                from Plugins.Extensions.KINOde.plugin import kinoMain
                 self.session.open(kinoMain)
         elif 'spiegel.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.spiegel.value:
-                from Plugins.Extensions.SPIEGELOnline.plugin import *
+                from Plugins.Extensions.SPIEGELOnline.plugin import spiegelMain
                 self.session.open(spiegelMain)
         elif 'focus.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.focus.value:
-                from Plugins.Extensions.FOCUSOnline.plugin import *
+                from Plugins.Extensions.FOCUSOnline.plugin import focusMain
                 self.session.open(focusMain)
         elif 'wiki.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.wiki.value:
-                from Plugins.Extensions.Wikipedia.plugin import *
+                from Plugins.Extensions.Wikipedia.plugin import wikiMain
                 self.session.open(wikiMain)
         elif 'kicker.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/kicker/plugin.pyo'):
-                from Plugins.Extensions.kicker.plugin import *
                 from Plugins.Extensions.kicker.plugin import kickerMain
                 self.session.open(kickerMain)
         elif 'kickerticker.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/kicker/plugin.pyo'):
-                from Plugins.Extensions.kicker.plugin import *
                 from Plugins.Extensions.kicker.plugin import tickerMain
                 self.session.open(tickerMain)
         elif 'verkehrsinfo.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.verkehrsinfo.value:
-                from Plugins.Extensions.verkehrsinfo.plugin import *
+                from Plugins.Extensions.verkehrsinfo.plugin import verkehrsinfoMain
                 self.session.open(verkehrsinfoMain)
         elif 'muzutv.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.muzutv.value:
-                from Plugins.Extensions.MUZUtv.plugin import *
+                from Plugins.Extensions.MUZUtv.plugin import muzuMain
                 self.session.open(muzuMain)
         elif 'facebook.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.facebook.value:
-                from Plugins.Extensions.Facebook.plugin import *
+                from Plugins.Extensions.Facebook.plugin import loginCheck
                 self.session.open(loginCheck)
         elif 'mediaportal.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MediaPortal/plugin.pyo'):
                 from Screens.PluginBrowser import PluginBrowser
                 from Plugins.Plugin import PluginDescriptor
-                from Components.PluginList import *
+                # from Components.PluginList import *
                 from Components.PluginComponent import plugins
                 pluginlist = []
                 pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
@@ -776,13 +772,13 @@ class EtPortalScreen(Screen):
                 plugin(session=self.session)
         elif 'skyrecorder.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/skyrecorder/plugin.pyo'):
-                from Plugins.Extensions.skyrecorder.plugin import *
+                from Plugins.Extensions.skyrecorder.plugin import SkyRecorderMainScreen
                 self.session.open(SkyRecorderMainScreen)
         elif 'tvcharts.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TVCharts/plugin.pyo'):
                 from Screens.PluginBrowser import PluginBrowser
                 from Plugins.Plugin import PluginDescriptor
-                from Components.PluginList import *
+                #from Components.PluginList import *
                 from Components.PluginComponent import plugins
                 pluginlist = []
                 pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
@@ -792,7 +788,7 @@ class EtPortalScreen(Screen):
                 plugin(session=self.session)
         elif 'mp3browser.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MP3Browser/plugin.pyo'):
-                from Plugins.Extensions.MP3Browser.plugin import *
+                #from Plugins.Extensions.MP3Browser.plugin import *
                 from Components.PluginComponent import plugins
                 plugin = _('MP3 Browser')
                 for p in plugins.getPlugins(where=[PluginDescriptor.WHERE_EXTENSIONSMENU, PluginDescriptor.WHERE_PLUGINMENU]):
@@ -802,7 +798,7 @@ class EtPortalScreen(Screen):
                     plugin(session=self.session)
         elif 'moviebrowser.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MovieBrowser/plugin.pyo'):
-                from Plugins.Extensions.MovieBrowser.plugin import *
+                #from Plugins.Extensions.MovieBrowser.plugin import *
                 from Components.PluginComponent import plugins
                 plugin = _('Movie Browser')
                 for p in plugins.getPlugins(where=[PluginDescriptor.WHERE_EXTENSIONSMENU, PluginDescriptor.WHERE_PLUGINMENU]):
@@ -812,13 +808,13 @@ class EtPortalScreen(Screen):
                     plugin(session=self.session)
         elif 'valerie.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/ProjectValerie/plugin.pyo'):
-                from Plugins.Extensions.ProjectValerie.plugin import *
+                from Plugins.Extensions.ProjectValerie.plugin import PVMC_MainMenu
                 self.session.open(PVMC_MainMenu)
         elif 'webradiofs.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/plugin.pyo'):
                 from Screens.PluginBrowser import PluginBrowser
                 from Plugins.Plugin import PluginDescriptor
-                from Components.PluginList import *
+                # from Components.PluginList import *
                 from Components.PluginComponent import plugins
                 pluginlist = []
                 pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
@@ -828,14 +824,14 @@ class EtPortalScreen(Screen):
                 plugin(session=self.session)
         elif 'yamp.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/YampMusicPlayer/plugin.pyo'):
-                from Plugins.Extensions.YampMusicPlayer.plugin import *
+                from Plugins.Extensions.YampMusicPlayer.plugin import Yamp
                 reload(Yamp)
                 self.session.open(Yamp.YampScreen)
         elif 'shoutcast.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/SHOUTcast/plugin.pyo'):
                 from Screens.PluginBrowser import PluginBrowser
                 from Plugins.Plugin import PluginDescriptor
-                from Components.PluginList import *
+                # from Components.PluginList import *
                 from Components.PluginComponent import plugins
                 pluginlist = []
                 pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
@@ -845,9 +841,9 @@ class EtPortalScreen(Screen):
                 plugin(session=self.session)
         elif 'tunein.png' in self.Thumbnaillist[3][2]:            
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo'):
-                from Plugins.Extensions.OpenOpera.plugin import *
+                from Plugins.Extensions.OpenOpera.plugin import browserinstance, BrowserRemoteControl
             elif fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
-                from Plugins.Extensions.NXHbbTV.plugin import *
+                from Plugins.Extensions.NXHbbTV.plugin import browserinstance, BrowserRemoteControl
             browserinstance.start()
             if browserinstance.is_browser_running() is True:
                 url = 'http://ce.radiotime.com'
@@ -855,9 +851,9 @@ class EtPortalScreen(Screen):
                 self.session.open(BrowserRemoteControl, True, False)
         elif 'wikitv.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo'):
-                from Plugins.Extensions.OpenOpera.plugin import *
+                from Plugins.Extensions.OpenOpera.plugin import browserinstance, BrowserRemoteControl
             elif fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
-                from Plugins.Extensions.NXHbbTV.plugin import * 
+                from Plugins.Extensions.NXHbbTV.plugin import browserinstance, BrowserRemoteControl
             browserinstance.start()
             if browserinstance.is_browser_running() is True:
                 url = 'http://portal.primatv.de/wikitv'
@@ -865,9 +861,9 @@ class EtPortalScreen(Screen):
                 self.session.open(BrowserRemoteControl, True, False)
         elif 'hbbig.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo'):
-                from Plugins.Extensions.OpenOpera.plugin import *
+                from Plugins.Extensions.OpenOpera.plugin import browserinstance, BrowserRemoteControl
             elif fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
-                from Plugins.Extensions.NXHbbTV.plugin import * 
+                from Plugins.Extensions.NXHbbTV.plugin import browserinstance, BrowserRemoteControl
             browserinstance.start()
             if browserinstance.is_browser_running() is True:
                 url = 'http://hbbig.com'
@@ -875,9 +871,9 @@ class EtPortalScreen(Screen):
                 self.session.open(BrowserRemoteControl, True, False)
         elif 'watchmi.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo'):
-                from Plugins.Extensions.OpenOpera.plugin import *
+                from Plugins.Extensions.OpenOpera.plugin import browserinstance, BrowserRemoteControl
             elif fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
-                from Plugins.Extensions.NXHbbTV.plugin import * 
+                from Plugins.Extensions.NXHbbTV.plugin import browserinstance, BrowserRemoteControl
             browserinstance.start()
             if browserinstance.is_browser_running() is True:
                 url = 'http://watchmi-smarttv.api.watchmi.tv/app/watchmi-smarttv/cehtml.cehtml'
@@ -885,9 +881,9 @@ class EtPortalScreen(Screen):
                 self.session.open(BrowserRemoteControl, True, False)
         elif 'ardhbbtv.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo'):
-                from Plugins.Extensions.OpenOpera.plugin import *
+                from Plugins.Extensions.OpenOpera.plugin import browserinstance, BrowserRemoteControl
             elif fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
-                from Plugins.Extensions.NXHbbTV.plugin import * 
+                from Plugins.Extensions.NXHbbTV.plugin import browserinstance, BrowserRemoteControl
             browserinstance.start()
             if browserinstance.is_browser_running() is True:
                 url = 'http://web.ard.de/hbbtv-portal/index.php'
@@ -897,7 +893,7 @@ class EtPortalScreen(Screen):
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TURKvod/plugin.pyo'):
                 from Screens.PluginBrowser import PluginBrowser
                 from Plugins.Plugin import PluginDescriptor
-                from Components.PluginList import *
+                #rom Components.PluginList import *
                 from Components.PluginComponent import plugins
                 pluginlist = []
                 pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
@@ -909,7 +905,7 @@ class EtPortalScreen(Screen):
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/GreekStreamTV/plugin.pyo'):
                 from Screens.PluginBrowser import PluginBrowser
                 from Plugins.Plugin import PluginDescriptor
-                from Components.PluginList import *
+                # from Components.PluginList import *
                 from Components.PluginComponent import plugins
                 pluginlist = []
                 pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
@@ -919,9 +915,9 @@ class EtPortalScreen(Screen):
                 plugin(session=self.session)
         elif 'opera.png' in self.Thumbnaillist[3][2]:
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/OpenOpera/plugin.pyo'):
-                from Plugins.Extensions.OpenOpera.plugin import *
+                from Plugins.Extensions.OpenOpera.plugin import browserinstance, BrowserRemoteControl
             elif fileExists('/usr/lib/enigma2/python/Plugins/Extensions/NXHbbTV/plugin.pyo'):
-                from Plugins.Extensions.NXHbbTV.plugin import * 
+                from Plugins.Extensions.NXHbbTV.plugin import browserinstance, BrowserRemoteControl
             browserinstance.start()
             self.session.open(BrowserRemoteControl, False, True)
         elif 'weblinks.png' in self.Thumbnaillist[3][2]:
@@ -945,7 +941,7 @@ class EtPortalScreen(Screen):
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MediaInfo/plugin.pyo'):
                 from Screens.PluginBrowser import PluginBrowser
                 from Plugins.Plugin import PluginDescriptor
-                from Components.PluginList import *
+                #from Components.PluginList import *
                 from Components.PluginComponent import plugins
                 pluginlist = []
                 pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
@@ -957,7 +953,7 @@ class EtPortalScreen(Screen):
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/downloadcenter/plugin.pyo'):
                 from Screens.PluginBrowser import PluginBrowser
                 from Plugins.Plugin import PluginDescriptor
-                from Components.PluginList import *
+                # from Components.PluginList import *
                 from Components.PluginComponent import plugins
                 pluginlist = []
                 pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
@@ -969,7 +965,7 @@ class EtPortalScreen(Screen):
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/FragMutti/plugin.pyo'):
                 from Screens.PluginBrowser import PluginBrowser
                 from Plugins.Plugin import PluginDescriptor
-                from Components.PluginList import *
+                # from Components.PluginList import *
                 from Components.PluginComponent import plugins
                 pluginlist = []
                 pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
@@ -981,7 +977,7 @@ class EtPortalScreen(Screen):
             if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MovieArchiver/plugin.pyo'):
                 from Screens.PluginBrowser import PluginBrowser
                 from Plugins.Plugin import PluginDescriptor
-                from Components.PluginList import *
+                # from Components.PluginList import *
                 from Components.PluginComponent import plugins
                 pluginlist = []
                 pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
@@ -991,7 +987,7 @@ class EtPortalScreen(Screen):
                 plugin(session=self.session)
         elif 'yahooweather.png' in self.Thumbnaillist[3][2]:
             if config.plugins.EtPortal.yahooweather.value:
-                from Plugins.Extensions.YahooWeather.plugin import *
+                from Plugins.Extensions.YahooWeather.plugin import MeteoMain
                 self.session.open(MeteoMain)
         if config.plugins.EtPortal.finalexit.value:
             if 'movie_player.png' in self.Thumbnaillist[3][2] or 'mediaportal.png' in self.Thumbnaillist[3][2]:
@@ -1010,16 +1006,15 @@ class EtPortalScreen(Screen):
         if config.plugins.EtPortal.Get.value:
             if 'wiki.png' in self.Thumbnaillist[3][2]:
                 if config.plugins.EtPortal.wiki.value:
-                    from Plugins.Extensions.Wikipedia.plugin import *
+                    from Plugins.Extensions.Wikipedia.plugin import wikiEvent
                     self.session.open(wikiEvent)
             elif 'tvspielfilm.png' in self.Thumbnaillist[3][2]:
                 if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/TVSpielfilm/plugin.pyo'):
-                    from Plugins.Extensions.TVSpielfilm.plugin import *
                     from Plugins.Extensions.TVSpielfilm.plugin import tvEvent
                     self.session.open(tvEvent)
             elif 'moviebrowser.png' in self.Thumbnaillist[3][2]:
                 if fileExists('/usr/lib/enigma2/python/Plugins/Extensions/MovieBrowser/plugin.pyo'):
-                    from Plugins.Extensions.MovieBrowser.plugin import *
+                    from Plugins.Extensions.MovieBrowser.plugin import movieBrowserPosterwall
                     self.session.open(movieBrowserPosterwall, 0, config.plugins.moviebrowser.filter.value, config.plugins.moviebrowser.filter.value)
 
 class EtPortalSetupScreen(Screen, ConfigListScreen):
